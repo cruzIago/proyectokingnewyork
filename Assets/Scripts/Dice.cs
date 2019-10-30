@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum dieResult { ENERGY, HEAL, ATTACK, DESTRUCTION, CELEBRITY, OUCH };
+
+
 public class Dice : MonoBehaviour
 {
     //Enumeration
-    public enum diceResult { ENERGY, HEAL, ATTACK, DESTRUCTION,CELEBRITY, OUCH};
     //Parameters
-    private diceResult currentResult;
-    private bool stays;
+    public dieResult currentResult { get; set; }
+    private bool stays = false;
     private Player owner;
-    private float diceVelocity;
+    [SerializeField]
+    private float diceVelocity = 0.0f;
     private Rigidbody rb;
 
     private void Awake()
@@ -20,14 +23,13 @@ public class Dice : MonoBehaviour
 
     void Update()
     {
+        diceVelocity = rb.velocity.magnitude;
+        if (isStop())
+        {
+            //mostrar el resultado por pantalla
+            Debug.Log(currentResult);
+        }
         
-    }
-
-    //Methods
-    public Dice(Player owner)
-    {
-        this.owner = owner;
-        this.stays = false;
     }
 
     public void Roll()
@@ -38,5 +40,10 @@ public class Dice : MonoBehaviour
     public void ApplyResult()
     {
         //Do something with currentResult. Devuelve??
+    }
+
+    private bool isStop()
+    {
+        return diceVelocity == 0.0f;
     }
 }
