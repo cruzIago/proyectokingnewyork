@@ -10,13 +10,24 @@ public class SceneManager : MonoBehaviour
     public List<Player> players;
     public List<Area> areas;
     protected Player activePlayer;
+    protected int activePId;
     protected Turn turn;
     protected Market market;
 
     //Methods
     protected void NextTurn()
     {
-        
+        if(activePId < players.Count)
+        {
+            activePId++;
+        }
+        else
+        {
+            activePId = 0;
+        }
+        activePlayer = players[activePId];
+        turn.ChangePlayer(activePlayer);
+        HighlightActivePlayer();
     }
 
     protected void UpdateGUI()
@@ -38,7 +49,11 @@ public class SceneManager : MonoBehaviour
 
     protected void HighlightActivePlayer()
     {
-
+        if (debugMode)
+        {
+            Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition());
+        }
+        
     }
 
     protected void MarkDeadPlayer()

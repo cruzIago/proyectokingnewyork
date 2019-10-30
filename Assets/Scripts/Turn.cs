@@ -45,6 +45,12 @@ public class Turn
         //All Market Logic
     }
 
+    public void ChangePlayer(Player nextPlayer)
+    {
+        currentPlayer = nextPlayer;
+        currentState = State.Begining;
+    }
+
     public void EndTurn()
     {
 
