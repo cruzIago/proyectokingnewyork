@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dice
+public class Dice : MonoBehaviour
 {
     //Enumeration
-    public enum dieResult { Energy, Heal, Attack, Destruction, Celebrity, Ouch}
+    public enum diceResult { ENERGY, HEAL, ATTACK, DESTRUCTION,CELEBRITY, OUCH};
     //Parameters
-    protected dieResult currentResult;
-    protected bool stays;
-    protected Player owner;
+    private diceResult currentResult;
+    private bool stays;
+    private Player owner;
+    private float diceVelocity;
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        
+    }
 
     //Methods
     public Dice(Player owner)
