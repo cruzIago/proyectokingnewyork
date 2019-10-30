@@ -9,7 +9,7 @@ public class Player
     //Parameters
     protected string playerName;
     protected string monsterName;
-    //Avatar: Model or Image
+    protected Sprite monsterSprite;
     protected int stars;
     protected int remainingHealth;
     protected int maxHealth;
@@ -27,7 +27,7 @@ public class Player
         this.playerName = playerName;
         this.monsterName = monsterName;
         this.position = startingPos;
-        //Avatar
+        this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
         this.stars = 0;
         this.remainingHealth = 10;
         this.maxHealth = 10;
@@ -75,10 +75,29 @@ public class Player
     public void Move(Area targetArea)
     {
         Debug.Log("Moving to " + targetArea.GetName());
+        position = targetArea.GetPosition();
+        //transform.position = transform.TransformPoint(position); Do this on SceneManager!
     }
 
     public void Attack(int damage)
     {
         Debug.Log(damage + " damage to other Monstas");
     }
+
+    #region getters and setters
+    public Vector3 GetPosition()
+    {
+        return position;
+    }
+
+    public string GetPlayerName()
+    {
+        return playerName;
+    }
+
+    public string GetMonsterName()
+    {
+        return monsterName;
+    }
+    #endregion
 }

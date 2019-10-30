@@ -39,4 +39,10 @@ public class Area
     {
         return areaName;
     }
+
+    public Vector3 GetPosition()
+    {
+        return position;
+    }
+
 }
