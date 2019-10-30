@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerTest : MonoBehaviour
 {
     //Constants
     protected readonly int MAX_STARS = 20;
     //Parameters
-    public string playerName;
-    public string monsterName;
-    public Sprite monsterSprite;
+    protected string playerName;
+    protected string monsterName;
+    //Avatar: Model or Image
     protected int stars;
     protected int remainingHealth;
     protected int maxHealth;
@@ -22,8 +22,19 @@ public class Player : MonoBehaviour
     Vector3 position;
 
     //Methods
-    public Player(string playerName, string monsterName, Vector3 startingPos)
+    public PlayerTest(string playerName, string monsterName, Vector3 startingPos)
     {
+        this.playerName = playerName;
+        this.monsterName = monsterName;
+        this.position = startingPos;
+        //Avatar
+        this.stars = 0;
+        this.remainingHealth = 10;
+        this.maxHealth = 10;
+        this.energy = 0;
+        this.hasIdol = false;
+        this.hasStatue = false;
+        this.winner = false;
     }
 
     public void ChangeLife(int life)
@@ -61,10 +72,10 @@ public class Player : MonoBehaviour
         this.energy -= 2;
     }
 
-    public void Move(Area targetArea)
+    public void Move(Vector3 targetArea)
     {
-        Debug.Log("Moving to " + targetArea.GetName());
-        position = targetArea.GetPosition();
+        Debug.Log("Moving to " + targetArea);
+        position = targetArea;
         transform.position = transform.TransformPoint(position);
     }
 
@@ -73,12 +84,13 @@ public class Player : MonoBehaviour
         Debug.Log(damage + " damage to other Monstas");
     }
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        //this.playerName = "Jughead";
-        //this.monsterName = "Captain Fish";
+        this.playerName = "Jughead";
+        this.monsterName = "El Dragon Edgy";
         this.position = new Vector3(1, 1, 1);
-        //this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
+        //Avatar
         this.stars = 0;
         this.remainingHealth = 10;
         this.maxHealth = 10;
@@ -97,25 +109,16 @@ public class Player : MonoBehaviour
             this.energy + ".");
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        
-    }
 
-    #region getters and setters
-    public Vector3 GetPosition()
-    {
-        return position;
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 target = Input.mousePosition;
+            target.y = 0;
+            target.z = 5;
+            Move(target);
+        }
     }
-
-    public string GetPlayerName()
-    {
-        return playerName;
-    }
-
-    public string GetMonsterName()
-    {
-        return monsterName;
-    }
-    #endregion
 }

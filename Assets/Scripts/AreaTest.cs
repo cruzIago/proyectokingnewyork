@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Area : MonoBehaviour
+public class AreaTest : MonoBehaviour
 {
+
     //Parameters
     public string areaName;
     protected int unitsCount;
@@ -12,8 +13,12 @@ public class Area : MonoBehaviour
     protected Vector3 position;
 
     //Methods
-    public Area(string areaName, Vector3 position)
+    public AreaTest(string areaName, Vector3 position)
     {
+        this.areaName = areaName;
+        this.unitsCount = 0;
+        this.position = position;
+        //Tiles & Players filled in SceneManager
     }
 
     public void DamageMonster(int playerIndex)
@@ -36,33 +41,29 @@ public class Area : MonoBehaviour
         return areaName;
     }
 
-    public Vector3 GetPosition()
+    public Vector3 OnMouseDown()
     {
-        return position;
-    }
-
-    
-
-    private void Start()
-    {
-        //this.areaName = areaName;
-        this.unitsCount = 0;
-        this.position = transform.position;
-
-    }
-
-    private void Update()
-    {
-
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Debug.Log("Me has tocao! " + areaName + ": " + position);
-            }
+            Debug.Log("Me has tocao! " + areaName);
+            return position;
         }
+        //Should never go this way
+        Debug.Log("Pos la has liao");
+        return new Vector3(1, 1, 1);
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        this.unitsCount = 0;
+        this.position = transform.position;
+        Debug.Log("Area " + this.areaName + ": " + this.position);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
 }
