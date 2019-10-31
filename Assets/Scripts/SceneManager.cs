@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneManager : MonoBehaviour
 {
     public bool debugMode = true;
     //Parameters
     //UX Interface????
+    #region UX Parameters
+    public List<RawImage> playersInfo;
+    #endregion
     public List<Player> players;
     public List<Area> areas;
     protected Player activePlayer;
