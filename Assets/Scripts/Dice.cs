@@ -11,23 +11,36 @@ public class Dice : MonoBehaviour
     //Parameters
     public dieResult currentResult { get; set; }
     private bool stays = false;
+    private bool applyResult = false;
+    [SerializeField]
+    private DieChecker dieChecker;
     private Player owner;
     [SerializeField]
     private float diceVelocity = 0.0f;
     private Rigidbody rb;
+    private const float MAX_TORQUE = 90.0f;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        Vector3 randomDirection = new Vector3(Random.value, Random.value, Random.value);
+        rb.AddTorque(randomDirection * Random.value * MAX_TORQUE, ForceMode.Acceleration);
+
+        transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
+    }
+
     void Update()
     {
         diceVelocity = rb.velocity.magnitude;
-        if (isStop())
+        if (isStop() && !applyResult)
         {
-            //mostrar el resultado por pantalla
-            Debug.Log(currentResult);
+            applyResult = true;
+            Debug.Log("Me he parado");
+            dieChecker.SumResult(currentResult);
         }
         
     }
@@ -44,6 +57,7 @@ public class Dice : MonoBehaviour
 
     private bool isStop()
     {
+        
         return diceVelocity == 0.0f;
     }
 }

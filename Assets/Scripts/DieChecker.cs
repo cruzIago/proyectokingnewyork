@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class DieChecker : MonoBehaviour
 {
+
+    public int [] results;
     // Start is called before the first frame update
     void Start()
     {
-        
+        results = new int[6];
+        for(int i = 0; i < results.Length; i++)
+        {
+            results[i] = 0;
+        }
     }
 
     // Update is called once per frame
@@ -48,5 +54,23 @@ public class DieChecker : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SumResult(dieResult result)
+    {
+        results[(int)result]++;
+        printResult();
+    }
+
+    private void printResult()
+    {
+        string[] dieResultNames = System.Enum.GetNames(typeof(dieResult));
+        string textResult = "";
+        for (int i = 0; i < results.Length; i++)
+        {
+            textResult += dieResultNames[i] + ": " + results[i] + "\n";
+        }
+
+        Debug.Log(textResult);
     }
 }
