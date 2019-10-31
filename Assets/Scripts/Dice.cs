@@ -12,7 +12,6 @@ public class Dice : MonoBehaviour
     public dieResult currentResult { get; set; }
     private bool stays = false;
     private bool applyResult = false;
-    [SerializeField]
     private DieChecker dieChecker;
     private Player owner;
     [SerializeField]
@@ -43,6 +42,11 @@ public class Dice : MonoBehaviour
             dieChecker.SumResult(currentResult);
         }
         
+    }
+
+    public void createDie(DieChecker dieChecker)
+    {
+        this.dieChecker = dieChecker;
     }
 
     public void Roll()

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class DieSpawner : MonoBehaviour
 {
-    public Dice die;
+    public Dice diePrefab;
     public int numDice = 6;
+    public DieChecker dieChecker;
 
     // Start is called before the first frame update
     void Start()
     {
         for(int i = 0; i < numDice; i++)
         {
-            GameObject.Instantiate(die,transform.TransformPoint(new Vector3(i,0,0)),Quaternion.identity);
+            Dice die = Instantiate(diePrefab,transform.TransformPoint(new Vector3(i,0,0)),Quaternion.identity);
+            die.createDie(dieChecker);
         }
     }
 }
