@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Area : MonoBehaviour
+public class Area
 {
     //Parameters
-    public string areaName;
+    protected string areaName;
     protected int unitsCount;
     protected List<Tile> tiles;
     protected List<Player> playersInArea;
@@ -14,6 +14,10 @@ public class Area : MonoBehaviour
     //Methods
     public Area(string areaName, Vector3 position)
     {
+        this.areaName = areaName;
+        this.unitsCount = 0;
+        this.position = position;
+        //Tiles & Players filled in SceneManager
     }
 
     public void DamageMonster(int playerIndex)
@@ -39,30 +43,6 @@ public class Area : MonoBehaviour
     public Vector3 GetPosition()
     {
         return position;
-    }
-
-    
-
-    private void Start()
-    {
-        //this.areaName = areaName;
-        this.unitsCount = 0;
-        this.position = transform.position;
-
-    }
-
-    private void Update()
-    {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Debug.Log("Me has tocao! " + areaName + ": " + position);
-            }
-        }
     }
 
 }

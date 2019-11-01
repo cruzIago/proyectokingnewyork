@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player
 {
     //Constants
     protected readonly int MAX_STARS = 20;
     //Parameters
-    public string playerName;
-    public string monsterName;
-    public Sprite monsterSprite;
+    protected string playerName;
+    protected string monsterName;
+    protected Sprite monsterSprite;
     protected int stars;
     protected int remainingHealth;
     protected int maxHealth;
@@ -24,6 +24,17 @@ public class Player : MonoBehaviour
     //Methods
     public Player(string playerName, string monsterName, Vector3 startingPos)
     {
+        this.playerName = playerName;
+        this.monsterName = monsterName;
+        this.position = startingPos;
+        this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
+        this.stars = 0;
+        this.remainingHealth = 10;
+        this.maxHealth = 10;
+        this.energy = 0;
+        this.hasIdol = false;
+        this.hasStatue = false;
+        this.winner = false;
     }
 
     public void ChangeLife(int life)
@@ -65,41 +76,12 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Moving to " + targetArea.GetName());
         position = targetArea.GetPosition();
-        transform.position = transform.TransformPoint(position);
+        //transform.position = transform.TransformPoint(position); Do this on SceneManager!
     }
 
     public void Attack(int damage)
     {
         Debug.Log(damage + " damage to other Monstas");
-    }
-
-    private void Start()
-    {
-        //this.playerName = "Jughead";
-        //this.monsterName = "Captain Fish";
-        this.position = new Vector3(1, 1, 1);
-        //this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
-        this.stars = 0;
-        this.remainingHealth = 10;
-        this.maxHealth = 10;
-        this.energy = 0;
-        this.hasIdol = false;
-        this.hasStatue = false;
-        this.winner = false;
-
-        Debug.Log(this.playerName + ", " +
-            this.monsterName + ", " +
-            this.position + ", " +
-            this.stars + ", " +
-            this.remainingHealth + ", " +
-            this.maxHealth + ", " +
-            this.winner + ", " +
-            this.energy + ".");
-    }
-
-    private void Update()
-    {
-        
     }
 
     #region getters and setters
