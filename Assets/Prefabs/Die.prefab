@@ -236,7 +236,7 @@ MeshRenderer:
   m_GameObject: {fileID: 7285364099954469980}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -496,8 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503f9f8bddabc6a45a52a63aad2dbb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieChecker: {fileID: 6635372194367281519, guid: 93c17288e83e7dd41a254d7f6b46c707,
-    type: 3}
+  dieChecker: {fileID: 0}
   diceVelocity: 0
 --- !u!54 &3936315704278196686
 Rigidbody:

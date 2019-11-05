@@ -59,7 +59,7 @@ public class DieChecker : MonoBehaviour
     public void SumResult(dieResult result)
     {
         results[(int)result]++;
-        printResult();
+        //printResult();
     }
 
     private void printResult()

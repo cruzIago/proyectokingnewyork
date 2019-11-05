@@ -12,7 +12,8 @@ public class Dice : MonoBehaviour
     public dieResult currentResult { get; set; }
     private bool stays = false;
     private bool applyResult = false;
-    private DieChecker dieChecker;
+    public bool stop { get; set; }
+    public DieChecker dieChecker;
     private Player owner;
     [SerializeField]
     private float diceVelocity = 0.0f;
@@ -26,6 +27,7 @@ public class Dice : MonoBehaviour
 
     private void Start()
     {
+        stop = false;
         Vector3 randomDirection = new Vector3(Random.value, Random.value, Random.value);
         rb.AddTorque(randomDirection * Random.value * MAX_TORQUE, ForceMode.Acceleration);
 
@@ -38,7 +40,9 @@ public class Dice : MonoBehaviour
         if (isStop() && !applyResult)
         {
             applyResult = true;
+            stop = true;
             Debug.Log("Me he parado");
+            rb.isKinematic = true;
             dieChecker.SumResult(currentResult);
         }
         
@@ -59,9 +63,8 @@ public class Dice : MonoBehaviour
         //Do something with currentResult. Devuelve??
     }
 
-    private bool isStop()
+    public bool isStop()
     {
-        
         return diceVelocity == 0.0f;
     }
 }
