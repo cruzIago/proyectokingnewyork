@@ -34,20 +34,43 @@ public class SceneManager : MonoBehaviour
         HighlightActivePlayer();
     }
 
-    protected void UpdateGUI()
+    public void UpdateGUI()
     {
-
+        //Cambio de Textos
+        foreach (RawImage pInfo in playersInfo)
+        {
+            Text[] texts = pInfo.GetComponentsInChildren<Text>();
+            foreach(Text t in texts)
+            {
+                switch (tag)
+                {
+                    case "healthInfo":
+                        ChangeHealth(7, t);
+                        break;
+                    case "starsInfo":
+                        ChangeStars(7, t);
+                        break;
+                    case "energyInfo":
+                        ChangeStars(7, t);
+                        break;
+                    default:
+                        Debug.Log("Error, should never happen. (UpdateGUI/switch)");
+                        break;
+                }
+            }
+        }
     }
 
-    protected void ChangeHealth(int health)
+    protected void ChangeHealth(int health, Text healthText)
+    {
+                
+    }
+
+    protected void ChangeStars(int stars, Text starsText)
     {
     }
 
-    protected void ChangeStars(int stars)
-    {
-    }
-
-    protected void ChangeEnergy()
+    protected void ChangeEnergy(int energy, Text energyText)
     {
     }
 

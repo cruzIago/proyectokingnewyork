@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Area
   - Monster
+  - starsInfo
+  - healthInfo
+  - cardsInfo
+  - energyInfo
   layers:
   - Default
   - TransparentFX
