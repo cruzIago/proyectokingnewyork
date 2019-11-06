@@ -53,11 +53,9 @@ public class SceneManager : MonoBehaviour
 
     protected void HighlightActivePlayer()
     {
-        if (debugMode)
-        {
-            Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition());
-        }
-        
+        Texture2D longIcon = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Assets/Placeholders/tarjeta personaje activo.png", typeof(Texture2D));
+        playersInfo[activePId].texture = longIcon;
+        playersInfo[activePId].SetNativeSize();
     }
 
     protected void MarkDeadPlayer()
@@ -86,6 +84,22 @@ public class SceneManager : MonoBehaviour
 
     void Update()
     {
+        if (debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                HighlightActivePlayer();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                activePId = 1;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                activePId = 2;
+            }
+        }
+        
     }
 
     //Testing Methods
