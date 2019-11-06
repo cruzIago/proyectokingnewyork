@@ -609,7 +609,7 @@ GameObject:
   - component: {fileID: 3867164342289082355}
   - component: {fileID: 3867164342289082357}
   - component: {fileID: 3867164342289082356}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -696,6 +696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diePrefab: {fileID: 7992530655069551752, guid: 16927ea97d0497c479bb23b6160a6696,
     type: 3}
+  mainCamera: {fileID: 0}
   numDice: 6
   dieChecker: {fileID: 3867164342147907376}
   dice: []

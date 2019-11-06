@@ -5,6 +5,7 @@ using UnityEngine;
 public class DieSpawner : MonoBehaviour
 {
     public Dice diePrefab;
+    public Camera mainCamera;
     public int numDice = 6;
     public DieChecker dieChecker;
     public List<Dice> dice = new List<Dice>();
@@ -22,7 +23,28 @@ public class DieSpawner : MonoBehaviour
         }
     }
 
-    
+    private void Update()
+    {
+        SelectDieByCursor();
+    }
+
+    private void SelectDieByCursor()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {    
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hit)
+            {
+                Debug.Log(hitInfo.collider.name);
+                Dice dieSelected = hitInfo.transform.GetComponent<Dice>();
+                if (dieSelected != null)
+                {
+                    dieSelected.stays = !dieSelected.stays;
+                }
+            }
+        }
+    }
 
     public bool AllDiceStop()
     {

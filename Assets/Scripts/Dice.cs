@@ -37,9 +37,7 @@ public class Dice : MonoBehaviour
         diceVelocity = rb.velocity.magnitude;
         if (isStop())
         {
-            
             stop = true;
-            Debug.Log("Me he parado");
             rb.isKinematic = true;
             dieChecker.SumResult(currentResult);
         }
