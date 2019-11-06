@@ -10,10 +10,11 @@ public class DiceBoard : MonoBehaviour
     private Camera mainCamera;
     [SerializeField]
     private float speedShowToCamera = 70f;
+    private Quaternion originalRotation;
     // Start is called before the first frame update
     void Start()
     {
-        
+        originalRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -21,10 +22,18 @@ public class DiceBoard : MonoBehaviour
     {
         if (spawner.AllDiceStop())
         {
-            Debug.Log("Todos los dados se han parado");
+            
             Vector3 cameraPos = mainCamera.transform.position;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, mainCamera.transform.rotation, speedShowToCamera * Time.deltaTime);
            
         }
+
+        
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            transform.rotation = originalRotation;
+            spawner.Reroll();
+        }
+        
     }
 }

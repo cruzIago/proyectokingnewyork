@@ -22,19 +22,31 @@ public class DieSpawner : MonoBehaviour
         }
     }
 
+    
+
     public bool AllDiceStop()
     {
-        if (!allDiceStop)
+           
+        foreach (Dice die in dice)
         {
-            foreach (Dice die in dice)
+            if (!die.stop)
             {
-                if (!die.stop)
-                    return false;
+                return false;
             }
-
-            allDiceStop = true;
+                
         }
+        
+        return true;
+    }
 
-        return allDiceStop;
+    public void Reroll()
+    {
+        foreach(Dice die in dice)
+        {
+            if (!die.stays)
+            {
+                die.Roll();
+            }
+        }
     }
 }

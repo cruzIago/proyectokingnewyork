@@ -10,7 +10,7 @@ public class Dice : MonoBehaviour
     //Enumeration
     //Parameters
     public dieResult currentResult { get; set; }
-    private bool stays = false;
+    public bool stays { get; set; }
     private bool applyResult = false;
     public bool stop { get; set; }
     public DieChecker dieChecker;
@@ -19,6 +19,7 @@ public class Dice : MonoBehaviour
     private float diceVelocity = 0.0f;
     private Rigidbody rb;
     private const float MAX_TORQUE = 90.0f;
+    private Vector3 initPos;
 
     private void Awake()
     {
@@ -27,19 +28,16 @@ public class Dice : MonoBehaviour
 
     private void Start()
     {
-        stop = false;
-        Vector3 randomDirection = new Vector3(Random.value, Random.value, Random.value);
-        rb.AddTorque(randomDirection * Random.value * MAX_TORQUE, ForceMode.Acceleration);
-
-        transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
+        initPos = transform.position;
+        Roll();
     }
 
     void Update()
     {
         diceVelocity = rb.velocity.magnitude;
-        if (isStop() && !applyResult)
+        if (isStop())
         {
-            applyResult = true;
+            
             stop = true;
             Debug.Log("Me he parado");
             rb.isKinematic = true;
@@ -55,7 +53,15 @@ public class Dice : MonoBehaviour
 
     public void Roll()
     {
-        //Devuelve resultado????
+        rb.isKinematic = false;
+        rb.velocity = -transform.up;
+        stays = false;
+        stop = false;
+        applyResult = false;
+        Vector3 randomDirection = new Vector3(Random.value, Random.value, Random.value);
+        rb.AddTorque(randomDirection * Random.value * MAX_TORQUE, ForceMode.Acceleration);
+        transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
+        transform.position = initPos;
     }
 
     public void ApplyResult()
