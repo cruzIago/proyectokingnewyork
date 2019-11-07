@@ -82,9 +82,11 @@ public class SceneManager : MonoBehaviour
 
     protected void HighlightActivePlayer()
     {
-        Texture2D longIcon = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Assets/Placeholders/tarjeta personaje activo.png", typeof(Texture2D));
+        /*Texture2D longIcon = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Assets/Placeholders/tarjeta personaje activo.png", typeof(Texture2D));
         playersInfo[activePId].texture = longIcon;
-        playersInfo[activePId].SetNativeSize();
+        playersInfo[activePId].SetNativeSize();*/
+        Animator animator = playersInfo[activePId].GetComponent<Animator>();
+        animator.SetBool("isHighlighted", true);
     }
 
     protected void MarkDeadPlayer(RawImage deadPInfo)
