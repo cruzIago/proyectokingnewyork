@@ -37,21 +37,24 @@ public class SceneManager : MonoBehaviour
     public void UpdateGUI()
     {
         //Cambio de Textos
-        foreach (RawImage pInfo in playersInfo)
+        for(int i = 0; i < playersInfo.Count; i++)
         {
-            Text[] texts = pInfo.GetComponentsInChildren<Text>();
+            Text[] texts = playersInfo[i].GetComponentsInChildren<Text>();
             foreach(Text t in texts)
             {
-                switch (tag)
+                switch (t.tag)
                 {
                     case "healthInfo":
-                        ChangeHealth(7, t);
+                        changeUINumber(players[i].remainingHealth, t, true);
                         break;
                     case "starsInfo":
-                        ChangeStars(7, t);
+                        changeUINumber(players[i].stars, t, true);
                         break;
                     case "energyInfo":
-                        ChangeStars(7, t);
+                        changeUINumber(players[i].energy, t, false);
+                        break;
+                    case "cardsInfo":
+                        changeUINumber(players[i].GetNumberOfCards(), t, true);
                         break;
                     default:
                         Debug.Log("Error, should never happen. (UpdateGUI/switch)");
@@ -61,17 +64,16 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    protected void ChangeHealth(int health, Text healthText)
+    protected void changeUINumber(int number, Text text, bool leftOfIcon)
     {
-                
-    }
-
-    protected void ChangeStars(int stars, Text starsText)
-    {
-    }
-
-    protected void ChangeEnergy(int energy, Text energyText)
-    {
+        if (leftOfIcon)
+        {
+            text.text = number + "x";
+        }
+        else
+        {
+            text.text = "x" + number;
+        }
     }
 
     protected void HighlightActivePlayer()
@@ -121,23 +123,11 @@ public class SceneManager : MonoBehaviour
             {
                 activePId = 2;
             }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                UpdateGUI();
+            }
         }
         
     }
-
-    //Testing Methods
-    /*public void ClickOnArea()
-    {
-        //Character Movement
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Debug.Log("Area " + areaName + ": " + position);
-            }
-        }
-    }*/
-
 }
