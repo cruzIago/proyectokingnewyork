@@ -62,7 +62,6 @@ public class Market
         while (discardedCards.Count != 0)
         {
             deck.Push(discardedCards.Pop());
-            ShuffleDeck();
         }
     }
 }

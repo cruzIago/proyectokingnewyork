@@ -6,7 +6,7 @@ using UnityEngine;
 public class Area : MonoBehaviour
 {
     //Parameters
-    public string areaName;
+    protected string areaName;
     protected int unitsCount;
     protected List<Tile> tiles;
     public List<Player> playersInArea;
@@ -19,6 +19,10 @@ public class Area : MonoBehaviour
     /*Constructor*/
     public Area(string areaName, Vector3 position)
     {
+        this.areaName = areaName;
+        this.unitsCount = 0;
+        this.position = position;
+        //Tiles & Players filled in SceneManager
     }
 
     /*Daña al monstruo del area con el indice recibido*/
