@@ -17,9 +17,12 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Movimiento de camara para el mapa
-        float rotateHorizontal = Input.GetAxis("Mouse X");
-        float rotateVertical = Input.GetAxis("Mouse Y");
-        transform.RotateAround(target.position, -Vector3.up, rotateHorizontal * speedH);
+        if (Input.GetMouseButton(1))
+        {
+            //Movimiento de camara para el mapa
+            float rotateHorizontal = Input.GetAxis("Mouse X");
+            float rotateVertical = Input.GetAxis("Mouse Y");
+            transform.RotateAround(target.position, -Vector3.up, rotateHorizontal * speedH);
+        }
     }
 }
