@@ -85,6 +85,12 @@ public class Player : MonoBehaviour
         //Permite que el jugador se mueva de nuevo al area que abandona y lo elimina de la lista
         if (!currentArea.GetName().Contains("Manhattan")) { currentArea.movementFlag = true; }
         currentArea.playersInArea.Remove(this);
+        //Mueve al jugador de la posicion 2 a la 1 en caso de que hubiese dos jugadores en el area
+        //Deberia hacerse de otra forma, pero como tirita se mantiene asi de momento
+        foreach(Player p in currentArea.playersInArea) {
+            p.position = currentArea.GetPosition();
+            p.transform.position = position;
+        }
 
         //Cambia el area a la nueva, mete al jugador en la lista y desactiva su flag
         currentArea = targetArea;
