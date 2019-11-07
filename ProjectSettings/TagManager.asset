@@ -10,6 +10,9 @@ TagManager:
   - healthInfo
   - cardsInfo
   - energyInfo
+  - Button
+  - PivotPos1
+  - PivotPos2
   layers:
   - Default
   - TransparentFX
