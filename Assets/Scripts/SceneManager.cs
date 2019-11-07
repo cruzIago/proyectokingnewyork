@@ -61,6 +61,10 @@ public class SceneManager : MonoBehaviour
                         break;
                 }
             }
+            if(players[i].remainingHealth <= 0)
+            {
+                MarkDeadPlayer(playersInfo[i]);
+            }
         }
     }
 
@@ -83,9 +87,9 @@ public class SceneManager : MonoBehaviour
         playersInfo[activePId].SetNativeSize();
     }
 
-    protected void MarkDeadPlayer()
+    protected void MarkDeadPlayer(RawImage deadPInfo)
     {
-
+        deadPInfo.CrossFadeAlpha(0.3f, 0.5f, false);
     }
 
     // Monobehaviour Methods
@@ -126,6 +130,10 @@ public class SceneManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.S))
             {
                 UpdateGUI();
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                MarkDeadPlayer(playersInfo[0]);
             }
         }
         
