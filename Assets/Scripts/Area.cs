@@ -6,7 +6,7 @@ using UnityEngine;
 public class Area : MonoBehaviour
 {
     //Parameters
-    protected string areaName;
+    public string areaName;
     protected int unitsCount;
     protected List<Tile> tiles;
     public List<Player> playersInArea;
@@ -63,10 +63,13 @@ public class Area : MonoBehaviour
     private void Start()
     {
         this.unitsCount = 0;
-        this.position = transform.position;
-        this.position2 = transform.position;
-        this.position2.z += 3;//Position2 es un offset para cuando 2j estan en un area. Debe adaptarse al modelo final
-        Debug.Log("[" + this.areaName + "] pos1: " + this.position + " pos2: " + this.position2);
+        foreach(Transform child in transform)
+        {
+            if (child.tag == "PivotPos1") { this.position = child.transform.position; }
+            if (child.tag == "PivotPos2") { this.position2 = child.transform.position; }
+        }
+        this.position.y += 1;
+        this.position2.y += 1;
     }
 
     private void Update()

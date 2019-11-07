@@ -57,11 +57,13 @@ public class Turn
             if (activePlayer.currentArea.GetName().Contains("Sur"))
             {
                 activePlayer.Move(manager.areas[1]);
+                Market();
             }
             //Si esta en Manhattan Medio, mueve a Manhattan Norte
             else if (activePlayer.currentArea.GetName().Contains("Medio"))
             {
                 activePlayer.Move(manager.areas[2]);
+                Market();
             }
             //Si esta en Manhattan Norte, deja elegir otro distrito
             else
@@ -74,6 +76,7 @@ public class Turn
             manager.areas[2].playersInArea.Count) < 2)
         {
             activePlayer.Move(manager.areas[0]);
+            Market();
         }
         //Si Manhattan no esta libre, comprueba si quiere moverse
         else
@@ -85,7 +88,9 @@ public class Turn
     /*Fase de mercado*/
     public void Market()
     {
+        Debug.Log("Entro en market");
         //All Market Logic
+        manager.panel.gameObject.SetActive(false);
     }
 
     /*Fase de fin de turno*/

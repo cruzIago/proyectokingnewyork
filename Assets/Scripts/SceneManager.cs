@@ -99,7 +99,6 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de si*/
     public void OnClickYes()
     {
-        CreateConfirmButton();
         buttonYes.gameObject.SetActive(false);
         buttonNo.gameObject.SetActive(false);
         turn.MoveWithClick();
@@ -119,7 +118,7 @@ public class SceneManager : MonoBehaviour
     {
         panel.SetActive(false);
         buttonOk.gameObject.SetActive(false);
-
+        CreateConfirmButton();
         //Habilita las areas a las que el jugador puede moverse
         foreach (Area a in areas)
         {
