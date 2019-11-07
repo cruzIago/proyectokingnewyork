@@ -10,9 +10,12 @@ public class SceneManager : MonoBehaviour
     //UX Interface????
     #region UX Parameters
     public List<RawImage> playersInfo;
+    public RawImage pInfoPrefab;
+    public Canvas canvas;
     #endregion
     public List<Player> players;
     public List<Area> areas;
+    public int nPlayers;
     protected Player activePlayer;
     protected int activePId;
     protected Turn turn;
@@ -21,17 +24,15 @@ public class SceneManager : MonoBehaviour
     //Methods
     protected void NextTurn()
     {
-        if(activePId < players.Count)
-        {
-            activePId++;
-        }
-        else
+        HighlightActivePlayer(false);
+        activePId++;
+        if(activePId >= nPlayers)
         {
             activePId = 0;
         }
-        activePlayer = players[activePId];
-        turn.ChangePlayer(activePlayer);
-        HighlightActivePlayer();
+        //activePlayer = players[activePId];
+        //turn.ChangePlayer(activePlayer);
+        HighlightActivePlayer(true);
     }
 
     public void UpdateGUI()
@@ -80,13 +81,10 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    protected void HighlightActivePlayer()
+    protected void HighlightActivePlayer(bool highlight)
     {
-        /*Texture2D longIcon = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Assets/Placeholders/tarjeta personaje activo.png", typeof(Texture2D));
-        playersInfo[activePId].texture = longIcon;
-        playersInfo[activePId].SetNativeSize();*/
         Animator animator = playersInfo[activePId].GetComponent<Animator>();
-        animator.SetBool("isHighlighted", true);
+        animator.SetBool("isHighlighted", highlight);
     }
 
     protected void MarkDeadPlayer(RawImage deadPInfo)
@@ -97,8 +95,15 @@ public class SceneManager : MonoBehaviour
     // Monobehaviour Methods
     void Start()
     {
-        activePlayer = players[0];
-        Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition());
+        /*activePlayer = players[0];
+        Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition());*/
+
+        for(int i = 0; i < nPlayers; i++)
+        {
+            RawImage newPInfo = Instantiate(pInfoPrefab, canvas.transform);
+            newPInfo.transform.localPosition = new Vector3(-319, 165 - 71*i, 0);
+            playersInfo.Add(newPInfo);
+        }
 
         /*market = new Market();
         Decorator e = new Decorator();//Testing
@@ -119,7 +124,11 @@ public class SceneManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                HighlightActivePlayer();
+                HighlightActivePlayer(true);
+            }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                NextTurn();
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
