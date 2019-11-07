@@ -12,11 +12,11 @@ public class Player : MonoBehaviour
     public Area currentArea;
     public string playerName;
     public string monsterName;
-    public Sprite monsterSprite;//Unused atm. Might delete later
-    protected int stars;
-    protected int remainingHealth;
+    public Sprite monsterSprite; //unused atm. Might delete later
+    public int stars;
+    public int remainingHealth;
     protected int maxHealth;
-    protected int energy;
+    public int energy;
     protected bool hasIdol;
     protected bool hasStatue;
     protected bool winner;
@@ -151,6 +151,11 @@ public class Player : MonoBehaviour
     public string GetMonsterName()
     {
         return monsterName;
+    }
+
+    public int GetNumberOfCards()
+    {
+        return deck.Count;
     }
     #endregion
 }

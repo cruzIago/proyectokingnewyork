@@ -9,10 +9,17 @@ public class SceneManager : MonoBehaviour
     //Variable de debugging
     public bool debugMode = true;
     //Parameters
+    //UX Interface
+    #region UX Parameters
+    public List<RawImage> playersInfo;
+    public RawImage pInfoPrefab;
+    public Canvas canvas;
+    #endregion
     public List<Player> players;
     public List<Area> areas;
     public Player activePlayer;
-    public Turn turn;
+    protected int activePId;
+    protected Turn turn;
     protected Market market;
 
     //UI
@@ -26,42 +33,94 @@ public class SceneManager : MonoBehaviour
     /*Comienza el siguiente turno*/
     protected void NextTurn()
     {
-        
+        HighlightActivePlayer(false);
+        activePId++;
+        if(activePId >= players.Count)
+        {
+            activePId = 0;
+        }
+        activePlayer = players[activePId];
+        turn.ChangePlayer(activePlayer);
+        HighlightActivePlayer(true);
     }
 
-    /*Actualiza los elementos de la GUI*/
-    protected void UpdateGUI()
+    /*Actualiza la GUI*/
+    public void UpdateGUI()
     {
-
+        //Cambio de Textos
+        for(int i = 0; i < playersInfo.Count; i++)
+        {
+            Text[] texts = playersInfo[i].GetComponentsInChildren<Text>();
+            foreach(Text t in texts)
+            {
+                switch (t.tag)
+                {
+                    case "healthInfo":
+                        changeUINumber(players[i].remainingHealth, t, true);
+                        break;
+                    case "starsInfo":
+                        changeUINumber(players[i].stars, t, true);
+                        break;
+                    case "energyInfo":
+                        changeUINumber(players[i].energy, t, false);
+                        break;
+                    case "cardsInfo":
+                        changeUINumber(players[i].GetNumberOfCards(), t, true);
+                        break;
+                    default:
+                        Debug.Log("Error, should never happen. (UpdateGUI/switch)");
+                        break;
+                }
+            }
+            if(players[i].remainingHealth <= 0)
+            {
+                MarkDeadPlayer(playersInfo[i]);
+            }
+        }
     }
 
-    protected void ChangeHealth(int health)
+    /*Cambia el el numero de un elemento concreto de la UI*/
+    protected void changeUINumber(int number, Text text, bool leftOfIcon)
     {
+        if (leftOfIcon)
+        {
+            text.text = number + "x";
+        }
+        else
+        {
+            text.text = "x" + number;
+        }
     }
 
-    protected void ChangeStars(int stars)
+    /*Hace la animacion de marcar o desmarcar la tarjeta del jugador activo*/
+    protected void HighlightActivePlayer(bool highlight)
     {
+        Animator animator = playersInfo[activePId].GetComponent<Animator>();
+        animator.SetBool("isHighlighted", highlight);
     }
 
-    protected void ChangeEnergy()
+    /*Marca la tarjeta de un jugador como muerto haciendola transparente*/
+    protected void MarkDeadPlayer(RawImage deadPInfo)
     {
+        deadPInfo.CrossFadeAlpha(0.3f, 0.5f, false);
     }
 
-    protected void HighlightActivePlayer()
-    {
-
-    }
-
-    protected void MarkDeadPlayer()
-    {
-
-    }
-
-    /*Inicializa la posicion de los jugadores y relaciona jugadores y areas. Indica jugador activo*/
+    /*Inicializa la posicion de los jugadores y relaciona jugadores y areas. Indica jugador activo
+     Instancia las tarjetas de la GUI de cada jugador*/
     protected void StartGame()
     {
+
+        for(int i = 0; i < players.Count; i++)
+        {
+            RawImage newPInfo = Instantiate(pInfoPrefab, canvas.transform);
+            newPInfo.transform.localPosition = new Vector3(-319, 165 - 71*i, 0);
+            playersInfo.Add(newPInfo);
+        }
+
         initButtons();
         activePlayer = players[0];
+        activePId = 0;
+        HighlightActivePlayer(true);
         foreach (Player p in players)
         {
             p.Move(p.currentArea);

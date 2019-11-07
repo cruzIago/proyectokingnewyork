@@ -326,6 +326,9 @@ MonoBehaviour:
   playerName: Veronica
   monsterName: Mantis
   monsterSprite: {fileID: 0}
+  stars: 0
+  remainingHealth: 0
+  energy: 0
 --- !u!1 &51785619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,6 +1202,9 @@ MonoBehaviour:
   playerName: Reggie
   monsterName: Rob
   monsterSprite: {fileID: 0}
+  stars: 0
+  remainingHealth: 0
+  energy: 0
 --- !u!1 &579312906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,6 +1929,9 @@ MonoBehaviour:
   playerName: Archie
   monsterName: Dragon
   monsterSprite: {fileID: 0}
+  stars: 0
+  remainingHealth: 0
+  energy: 0
 --- !u!1001 &1253489558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2613,6 +2622,9 @@ MonoBehaviour:
   playerName: Betty
   monsterName: Captain Fish
   monsterSprite: {fileID: 0}
+  stars: 0
+  remainingHealth: 0
+  energy: 0
 --- !u!1 &1833311097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,6 +2762,9 @@ MonoBehaviour:
   playerName: Jughead
   monsterName: Kong
   monsterSprite: {fileID: 0}
+  stars: 0
+  remainingHealth: 0
+  energy: 0
 --- !u!43 &1875400829
 Mesh:
   m_ObjectHideFlags: 0
@@ -3253,6 +3268,9 @@ MonoBehaviour:
   playerName: Cheryl
   monsterName: Rex
   monsterSprite: {fileID: 0}
+  stars: 0
+  remainingHealth: 0
+  energy: 0
 --- !u!1001 &2018232753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3392,6 +3410,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
+  playersInfo: []
+  pInfoPrefab: {fileID: 2783292517843549762, guid: 0c66cf110f287a541875ba93487e02aa,
+    type: 3}
+  canvas: {fileID: 907364510}
   players:
   - {fileID: 1868798996}
   - {fileID: 529123927}

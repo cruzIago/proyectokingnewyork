@@ -93,6 +93,13 @@ public class Turn
         manager.panel.gameObject.SetActive(false);
     }
 
+    /*Cambia al jugador indicado y vuelve al estado inicial*/
+    public void ChangePlayer(Player nextPlayer)
+    {
+        activePlayer = nextPlayer;
+        currentState = State.Begining;
+    }
+
     /*Fase de fin de turno*/
     public void EndTurn()
     {
