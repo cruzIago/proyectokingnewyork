@@ -9,7 +9,7 @@ public class SceneManager : MonoBehaviour
     //Variable de debugging
     public bool debugMode = true;
     //Parameters
-    //UX Interface????
+    //UX Interface
     #region UX Parameters
     public List<RawImage> playersInfo;
     public RawImage pInfoPrefab;
@@ -17,8 +17,7 @@ public class SceneManager : MonoBehaviour
     #endregion
     public List<Player> players;
     public List<Area> areas;
-    public int nPlayers;
-    protected Player activePlayer;
+    public Player activePlayer;
     protected int activePId;
     protected Turn turn;
     protected Market market;
@@ -45,6 +44,7 @@ public class SceneManager : MonoBehaviour
         HighlightActivePlayer(true);
     }
 
+    /*Actualiza la GUI*/
     public void UpdateGUI()
     {
         //Cambio de Textos
@@ -79,6 +79,7 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    /*Cambia el el numero de un elemento concreto de la UI*/
     protected void changeUINumber(int number, Text text, bool leftOfIcon)
     {
         if (leftOfIcon)
@@ -91,18 +92,21 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    /*Hace la animacion de marcar o desmarcar la tarjeta del jugador activo*/
     protected void HighlightActivePlayer(bool highlight)
     {
         Animator animator = playersInfo[activePId].GetComponent<Animator>();
         animator.SetBool("isHighlighted", highlight);
     }
 
+    /*Marca la tarjeta de un jugador como muerto haciendola transparente*/
     protected void MarkDeadPlayer(RawImage deadPInfo)
     {
         deadPInfo.CrossFadeAlpha(0.3f, 0.5f, false);
     }
 
-    /*Inicializa la posicion de los jugadores y relaciona jugadores y areas. Indica jugador activo*/
+    /*Inicializa la posicion de los jugadores y relaciona jugadores y areas. Indica jugador activo
+     Instancia las tarjetas de la GUI de cada jugador*/
     protected void StartGame()
     {
 
@@ -116,6 +120,7 @@ public class SceneManager : MonoBehaviour
         initButtons();
         activePlayer = players[0];
         activePId = 0;
+        HighlightActivePlayer(true);
         foreach (Player p in players)
         {
             p.Move(p.currentArea);
