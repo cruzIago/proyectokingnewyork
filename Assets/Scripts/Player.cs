@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 /*Clase que gestiona la información y las acciones relacionadas con cada uno de los jugadores*/
 public class Player : MonoBehaviour
+
+
 {
     //Constants
     protected readonly int MAX_STARS = 20;
@@ -28,6 +30,17 @@ public class Player : MonoBehaviour
     /*Constructor*/
     public Player(string playerName, string monsterName, Vector3 startingPos)
     {
+        this.playerName = playerName;
+        this.monsterName = monsterName;
+        this.position = startingPos;
+        this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
+        this.stars = 0;
+        this.remainingHealth = 10;
+        this.maxHealth = 10;
+        this.energy = 0;
+        this.hasIdol = false;
+        this.hasStatue = false;
+        this.winner = false;
     }
 
     /*Modifica la vida del jugador dentro del rango aceptable y desata los eventos que se requieran*/
@@ -82,6 +95,7 @@ public class Player : MonoBehaviour
         if (currentArea.playersInArea.Count == 1) { position = currentArea.GetPosition(); }
         if (currentArea.playersInArea.Count == 2) { position = currentArea.GetPosition2(); }
         transform.position = position;
+
     }
 
     /*Ataque a otros monstruos*/
