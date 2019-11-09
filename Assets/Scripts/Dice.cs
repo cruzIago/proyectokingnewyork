@@ -20,10 +20,11 @@ public class Dice : MonoBehaviour
     private Rigidbody rb;
     private const float MAX_TORQUE = 90.0f;
     private Vector3 initPos;
-
+    private bool hasBeenRolled = false;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        
     }
 
     private void Start()
@@ -35,8 +36,9 @@ public class Dice : MonoBehaviour
     void Update()
     {
         diceVelocity = rb.velocity.magnitude;
-        if (isStop())
+        if (IsStop())
         {
+            
             stop = true;
             rb.isKinematic = true;
             dieChecker.SumResult(currentResult);
@@ -51,6 +53,7 @@ public class Dice : MonoBehaviour
 
     public void Roll()
     {
+        
         rb.isKinematic = false;
         rb.velocity = -transform.up;
         stays = false;
@@ -60,6 +63,7 @@ public class Dice : MonoBehaviour
         rb.AddTorque(randomDirection * Random.value * MAX_TORQUE, ForceMode.Acceleration);
         transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
         transform.position = initPos;
+        hasBeenRolled = true;
     }
 
     public void ApplyResult()
@@ -67,8 +71,17 @@ public class Dice : MonoBehaviour
         //Do something with currentResult. Devuelve??
     }
 
-    public bool isStop()
+    public bool IsStop()
     {
         return diceVelocity == 0.0f;
+    }
+
+    public bool HasBeenRolled()
+    {
+        return hasBeenRolled;
+    }
+
+    public void SetHasBeenRolled(bool hasBeenRolled) {
+        this.hasBeenRolled = hasBeenRolled;
     }
 }

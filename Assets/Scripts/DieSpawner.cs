@@ -11,6 +11,7 @@ public class DieSpawner : MonoBehaviour
     public List<Dice> dice = new List<Dice>();
     private bool allDiceStop = false;
 
+    public bool diceCreated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class DieSpawner : MonoBehaviour
             die.createDie(dieChecker);
             dice.Add(die);
         }
+        diceCreated = true;
     }
 
     private void Update()
@@ -51,13 +53,28 @@ public class DieSpawner : MonoBehaviour
            
         foreach (Dice die in dice)
         {
-            if (!die.stop)
+            if (!die.IsStop())
             {
                 return false;
             }
                 
         }
-        
+        //Debug.Log("Todos se han parado");
+        return true;
+    }
+
+    public bool AllDiceRolled()
+    {
+
+        foreach (Dice die in dice)
+        {
+            if (!die.HasBeenRolled())
+            {
+                return false;
+            }
+
+        }
+        //Debug.Log("Todos se han parado");
         return true;
     }
 
