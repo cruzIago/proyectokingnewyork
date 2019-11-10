@@ -36,9 +36,9 @@ public class Dice : MonoBehaviour
     void Update()
     {
         diceVelocity = rb.velocity.magnitude;
-        if (IsStop())
+        if (IsStop() && !applyResult)
         {
-            
+            applyResult = true;
             stop = true;
             rb.isKinematic = true;
             dieChecker.SumResult(currentResult);
@@ -64,6 +64,12 @@ public class Dice : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
         transform.position = initPos;
         hasBeenRolled = true;
+    }
+
+    public void ReRoll()
+    {
+        dieChecker.SubtractResult(currentResult);
+        Roll();
     }
 
     public void ApplyResult()

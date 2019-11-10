@@ -62,7 +62,12 @@ public class DieChecker : MonoBehaviour
         //printResult();
     }
 
-    private void printResult()
+    public void SubtractResult(dieResult result)
+    {
+        results[(int)result]--;
+    }
+
+    public void PrintResult()
     {
         string[] dieResultNames = System.Enum.GetNames(typeof(dieResult));
         string textResult = "";

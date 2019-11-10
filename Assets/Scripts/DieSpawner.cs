@@ -84,7 +84,7 @@ public class DieSpawner : MonoBehaviour
         {
             if (!die.stays)
             {
-                die.Roll();
+                die.ReRoll();
             }
         }
     }

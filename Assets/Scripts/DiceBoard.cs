@@ -7,6 +7,8 @@ public class DiceBoard : MonoBehaviour
     [SerializeField]
     private DieSpawner spawner;
     [SerializeField]
+    private DieChecker checker;
+    [SerializeField]
     private Camera mainCamera;
     [SerializeField]
     private float speedShowToCamera = 70f;
@@ -34,6 +36,11 @@ public class DiceBoard : MonoBehaviour
             transform.rotation = originalRotation;
             spawner.Reroll();
         }
-        
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            checker.PrintResult();
+        }
     }
 }
