@@ -42,7 +42,8 @@ public class DieSpawner : MonoBehaviour
                 Dice dieSelected = hitInfo.transform.GetComponent<Dice>();
                 if (dieSelected != null)
                 {
-                    dieSelected.stays = !dieSelected.stays;
+                    dieSelected.Select();
+                    
                 }
             }
         }

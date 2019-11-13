@@ -21,15 +21,22 @@ public class Dice : MonoBehaviour
     private const float MAX_TORQUE = 90.0f;
     private Vector3 initPos;
     private bool hasBeenRolled = false;
+
+    [SerializeField]
+    private GameObject outline;
+    private Material outlineMaterial;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        
+        outlineMaterial = outline.GetComponent<Renderer>().material;
     }
 
     private void Start()
     {
         initPos = transform.position;
+        InitMaterial();
+        SetOutline(0.0f);
         Roll();
     }
 
@@ -64,12 +71,46 @@ public class Dice : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
         transform.position = initPos;
         hasBeenRolled = true;
+        
     }
 
     public void ReRoll()
     {
         dieChecker.SubtractResult(currentResult);
         Roll();
+    }
+
+    public void Select()
+    {
+        stays = !stays;
+        if (stays)
+        {
+            SetOutline(0.3f);
+        }
+        else 
+        {
+
+            SetOutline(0.0f);
+        }
+
+    }
+    
+    private void InitMaterial()
+    {
+        
+        outlineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        outlineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        outlineMaterial.SetInt("_ZWrite", 0);
+        outlineMaterial.DisableKeyword("_ALPHATEST_ON");
+        outlineMaterial.DisableKeyword("_ALPHABLEND_ON");
+        outlineMaterial.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        outlineMaterial.renderQueue = 3000;
+    }
+
+    private void SetOutline(float alpha)
+    {
+        
+        outlineMaterial.color = new Color(0, 1, 0, alpha);
     }
 
     public void ApplyResult()

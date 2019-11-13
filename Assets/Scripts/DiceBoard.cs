@@ -13,6 +13,10 @@ public class DiceBoard : MonoBehaviour
     [SerializeField]
     private float speedShowToCamera = 70f;
     private Quaternion originalRotation;
+
+    private int currentNumToss = 0;
+    private bool finishTossingDice = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +35,12 @@ public class DiceBoard : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !finishTossingDice)
         {
+            currentNumToss++;
             transform.rotation = originalRotation;
             spawner.Reroll();
+            finishTossingDice = currentNumToss == 3;
         }
 
 
