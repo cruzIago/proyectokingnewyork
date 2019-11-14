@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Area
+  - Monster
+  - starsInfo
+  - healthInfo
+  - cardsInfo
+  - energyInfo
+  - Button
+  - PivotPos1
+  - PivotPos2
   layers:
   - Default
   - TransparentFX
