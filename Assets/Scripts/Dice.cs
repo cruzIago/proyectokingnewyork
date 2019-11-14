@@ -11,6 +11,7 @@ public class Dice : MonoBehaviour
     //Parameters
     public dieResult currentResult { get; set; }
     public bool stays { get; set; }
+    private bool selected = false;
     private bool applyResult = false;
     public bool stop { get; set; }
     public DieChecker dieChecker;
@@ -32,6 +33,11 @@ public class Dice : MonoBehaviour
         outlineMaterial = outline.GetComponent<Renderer>().material;
     }
 
+    public void createDie(DieChecker dieChecker)
+    {
+        this.dieChecker = dieChecker;
+    }
+
     private void Start()
     {
         initPos = transform.position;
@@ -45,22 +51,24 @@ public class Dice : MonoBehaviour
         diceVelocity = rb.velocity.magnitude;
         if (IsStop() && !applyResult)
         {
-            applyResult = true;
-            stop = true;
-            rb.isKinematic = true;
-            dieChecker.SumResult(currentResult);
+            ApplyResult();
         }
         
     }
 
-    public void createDie(DieChecker dieChecker)
+    /*Suma el resultado al checker*/
+    private void ApplyResult()
     {
-        this.dieChecker = dieChecker;
+        applyResult = true;
+        stop = true;
+        rb.isKinematic = true;
+        dieChecker.SumResult(currentResult);
     }
 
+    
+
     public void Roll()
-    {
-        
+    {   
         rb.isKinematic = false;
         rb.velocity = -transform.up;
         stays = false;
@@ -71,33 +79,38 @@ public class Dice : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(Random.value * 360.0f, randomDirection);
         transform.position = initPos;
         hasBeenRolled = true;
-        
     }
 
     public void ReRoll()
     {
-        dieChecker.SubtractResult(currentResult);
-        Roll();
+        selected = stays;
+        if (!selected)
+        {
+            dieChecker.SubtractResult(currentResult);
+            Roll();
+        }
     }
 
     public void Select()
     {
-        stays = !stays;
-        if (stays)
+        if (!selected)
         {
-            SetOutline(0.3f);
-        }
-        else 
-        {
+            stays = !stays;
 
-            SetOutline(0.0f);
+            if (stays)
+            {
+                SetOutline(0.3f);
+            }
+            else
+            {
+                SetOutline(0.0f);
+            }
         }
-
     }
     
+    /*Para que el material por defecto sea transparente*/
     private void InitMaterial()
-    {
-        
+    {     
         outlineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
         outlineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
         outlineMaterial.SetInt("_ZWrite", 0);
@@ -108,14 +121,8 @@ public class Dice : MonoBehaviour
     }
 
     private void SetOutline(float alpha)
-    {
-        
+    {  
         outlineMaterial.color = new Color(0, 1, 0, alpha);
-    }
-
-    public void ApplyResult()
-    {
-        //Do something with currentResult. Devuelve??
     }
 
     public bool IsStop()
