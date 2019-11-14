@@ -229,8 +229,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 3867164342381631450}
+  checker: {fileID: 0}
   mainCamera: {fileID: 0}
-  speedShowToCamera: 70
+  speedFacingToCamera: 70
+  isFacingToCamera: 0
 --- !u!1 &3867164341340163380
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +698,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diePrefab: {fileID: 7992530655069551752, guid: 16927ea97d0497c479bb23b6160a6696,
     type: 3}
+  diceBoard: {fileID: 3867164341283654178}
   mainCamera: {fileID: 0}
   numDice: 6
   dieChecker: {fileID: 3867164342147907376}
   dice: []
+  areAllDiceCreated: 0

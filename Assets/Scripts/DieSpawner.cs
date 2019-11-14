@@ -17,7 +17,7 @@ public class DieSpawner : MonoBehaviour
     {
         for(int i = 0; i < numDice; i++)
         {
-            InstantiateDie();
+            InstantiateDie(i);
         }
         areAllDiceCreated = true;
     }
@@ -27,7 +27,7 @@ public class DieSpawner : MonoBehaviour
         SelectDieByCursor();
     }
 
-    private void InstantiateDie()
+    private void InstantiateDie(int i)
     {
         Dice die = Instantiate(diePrefab, transform.TransformPoint(new Vector3(i, 0, 0)), Quaternion.identity);
         die.transform.parent = transform;

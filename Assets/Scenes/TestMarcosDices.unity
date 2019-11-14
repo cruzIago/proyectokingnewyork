@@ -294,8 +294,25 @@ PrefabInstance:
       propertyPath: checker
       value: 
       objectReference: {fileID: 1314605143}
+    - target: {fileID: 3867164342381631450, guid: dee32ca8ebae73a43981f7ecc8b412d0,
+        type: 3}
+      propertyPath: diceBoard
+      value: 
+      objectReference: {fileID: 733845881}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dee32ca8ebae73a43981f7ecc8b412d0, type: 3}
+--- !u!114 &733845881 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3867164341283654178, guid: dee32ca8ebae73a43981f7ecc8b412d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 601918496}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4002a8e8f82f2a4449d055c6dbcdade5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1084302166 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3867164342381631450, guid: dee32ca8ebae73a43981f7ecc8b412d0,
