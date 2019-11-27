@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*Clase que gestiona todo el flujo de un turno*/
-public class Turn
+public class Turn : MonoBehaviour
 {
     //Enumeration
     public enum State {Begining, ThrowDice, SolveDice, Movement, Market, EndTurn};
@@ -13,9 +13,20 @@ public class Turn
     protected Player activePlayer;
     protected State currentState;
 
+    [SerializeField]
+    private GameObject diceBoardPrefab;
+    private GameObject diceBoard;
+
     //Methods
     /*Constructor*/
     public Turn(Player activePlayer, State currentState, SceneManager manager)
+    {
+        this.activePlayer = activePlayer;
+        this.currentState = currentState;
+        this.manager = manager;
+    }
+
+    public void StartTurn(Player activePlayer, State currentState, SceneManager manager)
     {
         this.activePlayer = activePlayer;
         this.currentState = currentState;
@@ -34,6 +45,8 @@ public class Turn
         //Roll
         //Keep
         //ReRoll
+        diceBoard = Instantiate(diceBoardPrefab);
+        
     }
 
     /*Aplica los efectos de los dados*/

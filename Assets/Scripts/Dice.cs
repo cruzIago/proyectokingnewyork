@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum dieResult { ENERGY, HEAL, ATTACK, DESTRUCTION, CELEBRITY, OUCH };
+public enum dieResult { OUCH, DESTRUCTION, ATTACK, HEAL, CELEBRITY, ENERGY };
 
 
 public class Dice : MonoBehaviour

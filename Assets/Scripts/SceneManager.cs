@@ -29,6 +29,10 @@ public class SceneManager : MonoBehaviour
     public Button buttonOk;
     public GameObject panel;
 
+    [SerializeField]
+    private GameObject turnPrefab;
+    
+
     //Methods
     /*Comienza el siguiente turno*/
     protected void NextTurn()
@@ -129,7 +133,9 @@ public class SceneManager : MonoBehaviour
         foreach (Area a in areas) a.setManager(this);
         panel.SetActive(false);
         if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
-        turn = new Turn(activePlayer, Turn.State.Begining, this);
+        //turn = new Turn(activePlayer, Turn.State.Begining, this);
+        turn = Instantiate(turnPrefab).GetComponent<Turn>();
+        turn.StartTurn(activePlayer, Turn.State.Begining, this);
     }
 
     /*Inicializa la visibilidad de todos los botones*/
@@ -192,17 +198,8 @@ public class SceneManager : MonoBehaviour
     {
         StartGame();
         turn.Move();
-        //No borrar, se va a usar en futuras pruebas
-        /*market = new Market();
-        Decorator e = new Decorator();//Testing
-        market.deck.Push(new Card("Carta 1", e, Card.CardType.Permanent));
-        market.deck.Push(new Card("Carta 2", e, Card.CardType.Permanent));
-        market.deck.Push(new Card("Carta 3", e, Card.CardType.Discard));
-        market.deck.Push(new Card("Carta 4", e, Card.CardType.Permanent));
-        market.deck.Push(new Card("Carta 5", e, Card.CardType.Discard));
-        market.deck.Push(new Card("Carta 6", e, Card.CardType.Permanent));
-        market.ShuffleDeck();
-        while (market.deck.Count != 0) Debug.Log("Carta que sale: " + market.deck.Pop().GetName());*/
+        //turn.RollDice();
+        
     }
 
     void Update()

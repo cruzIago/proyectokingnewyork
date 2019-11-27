@@ -36,22 +36,22 @@ public class DieChecker : MonoBehaviour
 
         switch (dieSide.currentSide)
         {
-            case dieResult.ATTACK:
+            case dieResult.ATTACK: //3
                 die.currentResult = dieResult.ATTACK;
                 break;
-            case dieResult.CELEBRITY:
+            case dieResult.CELEBRITY: //5
                 die.currentResult = dieResult.CELEBRITY;
                 break;
-            case dieResult.DESTRUCTION:
+            case dieResult.DESTRUCTION: //2
                 die.currentResult = dieResult.DESTRUCTION;
                 break;
-            case dieResult.ENERGY:
+            case dieResult.ENERGY: //6
                 die.currentResult = dieResult.ENERGY;
                 break;
-            case dieResult.HEAL:
+            case dieResult.HEAL: //4
                 die.currentResult = dieResult.HEAL;
                 break;
-            case dieResult.OUCH:
+            case dieResult.OUCH: //1
                 die.currentResult = dieResult.OUCH;
                 break;
             default:
