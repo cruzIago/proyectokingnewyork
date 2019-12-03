@@ -138,4 +138,6 @@ public class Dice : MonoBehaviour
     public void SetHasBeenRolled(bool hasBeenRolled) {
         this.hasBeenRolled = hasBeenRolled;
     }
+
+    
 }

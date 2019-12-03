@@ -84,6 +84,8 @@ public class PlayerTest : MonoBehaviour
         Debug.Log(damage + " damage to other Monstas");
     }
 
+    
+
     // Start is called before the first frame update
     void Start()
     {

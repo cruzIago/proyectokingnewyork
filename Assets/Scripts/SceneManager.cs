@@ -193,6 +193,18 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void AttackOtherPlayers(Player currentPlayer, int damage)
+    {
+        foreach( Player player in players)
+        {
+            if(currentPlayer.IsInManhattan() != player.IsInManhattan())
+            {
+                player.ChangeLife(damage);
+            }
+        }
+
+    }
+
     // Monobehaviour Methods
     void Start()
     {

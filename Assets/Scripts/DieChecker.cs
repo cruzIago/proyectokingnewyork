@@ -82,4 +82,36 @@ public class DieChecker : MonoBehaviour
 
         Debug.Log(textResult);
     }
+
+    public void SolveDice(Player player)
+    {
+        for (int i = 0; i < results.Length; i++)
+        {
+            dieResult dieSide =(dieResult) i;
+
+            //cantidad de dados de resultado i
+            switch (dieSide) {
+                case dieResult.ATTACK:
+                    player.Attack(results[i]);
+                    break;
+                case dieResult.CELEBRITY:
+                    player.ChangeStars(results[i]);
+                    break;
+                case dieResult.DESTRUCTION:
+                    player.Destruction(results[i]);
+                    break;
+                case dieResult.ENERGY:
+                    player.ChangeEnergy(results[i]);
+                break;
+                case dieResult.HEAL:
+                    player.ChangeLife(results[i]);
+                    break;
+                case dieResult.OUCH:
+                    player.Ouch(results[i]);
+                    break;
+
+
+            }
+        }
+    }
 }
