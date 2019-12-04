@@ -20,7 +20,7 @@ public class SceneManager : MonoBehaviour
     public Player activePlayer;
     protected int activePId;
     protected Turn turn;
-    protected Market market;
+    public Market market;
 
     //UI
     public Button buttonTurn;
@@ -129,7 +129,7 @@ public class SceneManager : MonoBehaviour
         foreach (Area a in areas) a.setManager(this);
         panel.SetActive(false);
         if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
-        market = new Market();
+        market.HideCards();
         turn = new Turn(activePlayer, Turn.State.Begining, this);
     }
 

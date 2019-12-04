@@ -90,6 +90,7 @@ public class Turn
     {
         Debug.Log("Entro en market");
         //All Market Logic
+        manager.market.ShowCards();
         manager.panel.gameObject.SetActive(false);
     }
 

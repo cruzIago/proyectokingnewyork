@@ -15,7 +15,6 @@ public class Card : MonoBehaviour
 
 
     //Methods
-
     public void ApplyEffect(Player buyer)
     {
         switch (type)
@@ -36,18 +35,24 @@ public class Card : MonoBehaviour
         }
     }
 
+    public void ChangeVisibility(bool visible)
+    {
+        if (visible) { this.gameObject.SetActive(true); }
+        else { this.gameObject.SetActive(false); }
+    }
+
     #region getters and setters
     public string GetName()
     {
         return cardName;
     }
+
     #endregion
 
 
     #region monobehaviour
     public void Start()
     {
-        
     }
 
     public void Update()

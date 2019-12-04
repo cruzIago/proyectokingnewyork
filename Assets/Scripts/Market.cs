@@ -26,6 +26,15 @@ public class Market : MonoBehaviour
         return shownCards[index];
     }
 
+    public void HideCards() {
+        foreach (Card c in shownCards) { c.ChangeVisibility(false); }
+    }
+
+    public void ShowCards()
+    {
+        foreach (Card c in shownCards) { c.ChangeVisibility(true); }
+    }
+
     private void Start()
     {
         this.deck = new Stack<Card>();
