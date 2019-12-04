@@ -50,8 +50,10 @@ public class UI_Controller : MonoBehaviour
         bool isChanged = false;
         bool isAdded = false;
         int newIndex = parent.charIndex;
-        while (!isChanged)
+        int maxIter = 0;
+        while (!isChanged && maxIter < 10)
         {
+            maxIter++;
             newIndex--;
             isAdded = false;
             if (newIndex <0)
@@ -83,7 +85,9 @@ public class UI_Controller : MonoBehaviour
         bool isChanged=false;
         bool isAdded = false;
         int newIndex = parent.charIndex;
-        while (!isChanged) {
+        int maxIter = 0;
+        while (!isChanged && maxIter < 10) {
+            maxIter++;
             newIndex++;
             isAdded = false;
             if (newIndex> 5) {
@@ -126,6 +130,9 @@ public class UI_Controller : MonoBehaviour
             if (!isAdded)
             {
                 CharacterFrame test = Instantiate(ch, characterContainer.transform);
+                Button[] botones = test.GetComponentsInChildren<Button>();
+                botones[0].onClick.AddListener(delegate { backCharacter(botones[0].GetComponentInParent<CharacterFrame>()); });
+                botones[1].onClick.AddListener(delegate { nextCharacter(botones[1].GetComponentInParent<CharacterFrame>()); });
                 charactersInScreen.Add(test);
                 break;
             }
@@ -139,6 +146,11 @@ public class UI_Controller : MonoBehaviour
     void DynamicFrameLess()
     {
         CharacterFrame test = charactersInScreen[charactersInScreen.Count - 1];
+        Button[] botones = test.GetComponentsInChildren<Button>();
+        botones[0].onClick.RemoveAllListeners();
+        botones[1].onClick.RemoveAllListeners();
+        botones[0].onClick.AddListener(delegate { backCharacter(botones[0].GetComponentInParent<CharacterFrame>()); });
+        botones[1].onClick.AddListener(delegate { nextCharacter(botones[1].GetComponentInParent<CharacterFrame>()); });
         charactersInScreen.Remove(test);
         Destroy(test.gameObject);
     }
