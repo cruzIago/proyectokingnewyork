@@ -2,37 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card
+public class Card : MonoBehaviour
 {
     //Enumeration
-    //Should be in Manager?
-    public enum CardType {Discard, Permanent}
+    public enum CardType {Health, Idol, LibertyStatue}
 
     //Parameters
-    string name;
-    Decorator effect;
-    CardType type;
+    string cardName;
+    [SerializeField] private CardType type;
+    public Sprite cardImage;
+    SceneManager manager;
+
 
     //Methods
-    public Card(string name, Decorator effect, CardType type)
+
+    public void ApplyEffect(Player buyer)
     {
-        this.name = name;
-        this.effect = effect;
-        this.type = type;
+        switch (type)
+        {
+            case CardType.Health:
+                buyer.ChangeLife(1);
+                break;
+            case CardType.Idol:
+                foreach (Player p in manager.players) { p.SetIdol(false); }
+                buyer.SetIdol(true);
+                break;
+            case CardType.LibertyStatue:
+                foreach (Player p in manager.players) { p.SetStatue(false); }
+                buyer.SetStatue(true);
+                break;
+            default:
+                break;
+        }
     }
 
+    #region getters and setters
     public string GetName()
     {
-        return name;
+        return cardName;
+    }
+    #endregion
+
+
+    #region monobehaviour
+    public void Start()
+    {
+        
     }
 
-    public Decorator ApplyEffect()
+    public void Update()
     {
-        return effect;
+        
     }
+#endregion
 
-    public virtual void DiscardEffect()
-    {
-        Debug.Log("Error in Card: Method is not defined in Child");
-    }
 }

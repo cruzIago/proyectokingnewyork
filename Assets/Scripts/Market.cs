@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*Clase que se encarga de la gestion de las operaciones del mercado: cartas a comprar, baraja y pila de descartes*/
-public class Market
+public class Market : MonoBehaviour
 {
     //Constants
     protected readonly int SHOWNCARDS_NUM = 3;
@@ -17,9 +17,6 @@ public class Market
     /*Constructor*/
     public Market()
     {
-        deck = new Stack<Card>();
-        discardedCards = new Stack<Card>();
-        shownCards = new List<Card>();
     }
 
     /*Devuelve la carta comprada*/
@@ -29,6 +26,18 @@ public class Market
         return shownCards[index];
     }
 
+    private void Start()
+    {
+        this.deck = new Stack<Card>();
+        this.discardedCards = new Stack<Card>();
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    //Metodos que no se van a usar
     /*Aleatoriza el mazo*/
     public void ShuffleDeck()
     {
@@ -41,14 +50,12 @@ public class Market
             cardList[i] = cardList[r];
             cardList[r] = tmp;
         }
-        foreach (Card c in cardList) deck.Push(c);            
+        foreach (Card c in cardList) deck.Push(c);
     }
 
     /*Manda al descarte las cartas mostradas y saca nuevas*/
     public void ReRollCards()
     {
-        //TODO: foreach para evitar que den problemas las ultimas
-        //Can't use foreach since we have a value asignment
         for (int i = 0; i < SHOWNCARDS_NUM; i++)
         {
             discardedCards.Push(shownCards[i]);

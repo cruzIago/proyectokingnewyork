@@ -157,5 +157,25 @@ public class Player : MonoBehaviour
     {
         return deck.Count;
     }
+
+    public void SetIdol(bool itHas)
+    {
+        hasIdol = itHas;
+    }
+
+    public bool HasIdol()
+    {
+        return hasIdol;
+    }
+
+    public void SetStatue(bool itHas)
+    {
+        hasStatue = itHas;
+    }
+
+    public bool HasStatue()
+    {
+        return hasStatue;
+    }
     #endregion
 }

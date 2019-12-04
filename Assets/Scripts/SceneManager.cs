@@ -129,6 +129,7 @@ public class SceneManager : MonoBehaviour
         foreach (Area a in areas) a.setManager(this);
         panel.SetActive(false);
         if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
+        market = new Market();
         turn = new Turn(activePlayer, Turn.State.Begining, this);
     }
 
