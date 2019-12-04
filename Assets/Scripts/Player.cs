@@ -120,6 +120,7 @@ public class Player : MonoBehaviour
     {
         if (ouches == 0)
             return;
+        manager.Ouch(this, ouches);
         Debug.Log(ouches + " ouches");
     }
 

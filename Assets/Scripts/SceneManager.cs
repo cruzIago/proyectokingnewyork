@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 /*Clase que gestiona la escena de desarrollo del juego*/
 public class SceneManager : MonoBehaviour
 {
@@ -199,10 +201,32 @@ public class SceneManager : MonoBehaviour
         {
             if(currentPlayer.IsInManhattan() != player.IsInManhattan())
             {
-                player.ChangeLife(damage);
+                player.ChangeLife(-damage);
             }
         }
 
+    }
+
+    public void Ouch(Player player, int ouches)
+    {
+        if (ouches == 1)
+        {
+            Area playerArea = player.currentArea;
+            player.ChangeLife(-playerArea.unitsCount);
+
+        }else if(ouches == 2)
+        {
+
+            Area playerArea = player.currentArea;
+            playerArea.DamageAllMonstersOnArea();
+
+        }else if(ouches >= 3)
+        {
+            foreach(Area area in areas)
+            {
+                area.DamageAllMonstersOnArea();
+            }
+        }
     }
 
     // Monobehaviour Methods
