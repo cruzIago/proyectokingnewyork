@@ -53,8 +53,8 @@ public class Turn : MonoBehaviour
                 Market();
                 break;
             case State.EndTurn:
-                ChangePlayer();
-                EndTurn();
+                //manager.NextTurn();
+                //EndTurn();
                 break;
             default:
                 break;
@@ -130,18 +130,10 @@ public class Turn : MonoBehaviour
     }
 
     /*Cambia al jugador indicado y vuelve al estado inicial*/
-    public void ChangePlayer()
+    public void ChangePlayer(Player nextPlayer)
     {
         Debug.Log("CHANGE PLAYER");
-        int activePlayerId = manager.players.IndexOf(activePlayer);
-        if (activePlayerId + 1 == manager.players.Count)
-        {
-            activePlayerId = 0;
-        } else
-        {
-            activePlayerId += 1;
-        }
-        activePlayer = manager.players[activePlayerId];
+        activePlayer = nextPlayer;
         currentState = State.Begining;
     }
 
