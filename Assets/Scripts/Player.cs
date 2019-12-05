@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     List<Card> deck;//Permanentes
     List<Decorator> effects;
     Vector3 position;
+    private Card selectedCard = null;
 
     //Methods
 
@@ -73,20 +74,20 @@ public class Player : MonoBehaviour
     public void BuyCard(Card targetCard, int cost)
     {
         Debug.Log("I'm buying this card: " + targetCard.GetName());
-        deck.Add(targetCard);
+        deck.Add(targetCard);//TODO: Delete
         ChangeEnergy(-cost); //Test!
+        targetCard.SetBuyer(this);
+        targetCard.ApplyEffect();
     }
 
     /*Mueve al jugador al area seleccionada*/
     public void Move(Area targetArea)
     {
-        //For testing: if (targetArea.GetName() != currentArea.GetName())
-
         //Permite que el jugador se mueva de nuevo al area que abandona y lo elimina de la lista
         if (!currentArea.GetName().Contains("Manhattan")) { currentArea.movementFlag = true; }
         currentArea.playersInArea.Remove(this);
+
         //Mueve al jugador de la posicion 2 a la 1 en caso de que hubiese dos jugadores en el area
-        //Deberia hacerse de otra forma, pero como tirita se mantiene asi de momento
         foreach(Player p in currentArea.playersInArea) {
             p.position = currentArea.GetPosition();
             p.transform.position = position;
@@ -101,7 +102,6 @@ public class Player : MonoBehaviour
         if (currentArea.playersInArea.Count == 1) { position = currentArea.GetPosition(); }
         if (currentArea.playersInArea.Count == 2) { position = currentArea.GetPosition2(); }
         transform.position = position;
-
     }
 
     /*Ataque a otros monstruos*/
@@ -110,6 +110,7 @@ public class Player : MonoBehaviour
         Debug.Log(damage + " damage to other Monstas");
     }
 
+    #region Monobehaviour
     /*Inicializacion del GameObject*/
     private void Start()
     {
@@ -136,6 +137,7 @@ public class Player : MonoBehaviour
     {
         transform.position = position;
     }
+    #endregion
 
     #region getters and setters
     public Vector3 GetPosition()
@@ -156,6 +158,36 @@ public class Player : MonoBehaviour
     public int GetNumberOfCards()
     {
         return deck.Count;
+    }
+
+    public void SetIdol(bool itHas)
+    {
+        hasIdol = itHas;
+    }
+
+    public bool HasIdol()
+    {
+        return hasIdol;
+    }
+
+    public void SetStatue(bool itHas)
+    {
+        hasStatue = itHas;
+    }
+
+    public bool HasStatue()
+    {
+        return hasStatue;
+    }
+
+    public void SetSelectedCard(Card c)
+    {
+        selectedCard = c;
+    }
+
+    public Card GetSelectedCard()
+    {
+        return selectedCard;
     }
     #endregion
 }

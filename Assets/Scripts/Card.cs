@@ -2,37 +2,81 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card
+public class Card : MonoBehaviour
 {
     //Enumeration
-    //Should be in Manager?
-    public enum CardType {Discard, Permanent}
+    public enum CardType {Health, Idol, LibertyStatue}
 
     //Parameters
-    string name;
-    Decorator effect;
-    CardType type;
+    string cardName;
+    [SerializeField] private CardType type;
+    public Sprite cardImage;
+    [SerializeField] SceneManager manager;
+    private bool clickFlag = false;
+    Player buyer;
+
 
     //Methods
-    public Card(string name, Decorator effect, CardType type)
+    public void ApplyEffect()
     {
-        this.name = name;
-        this.effect = effect;
-        this.type = type;
+        Debug.Log("Se ha activado el efecto " + type + " desde el siñor: " + buyer.GetMonsterName());
+        switch (type)
+        {
+            case CardType.Health:
+                buyer.ChangeLife(1);
+                break;
+            case CardType.Idol:
+                foreach (Player p in manager.players) { p.SetIdol(false); }
+                buyer.SetIdol(true);
+                break;
+            case CardType.LibertyStatue:
+                foreach (Player p in manager.players) { p.SetStatue(false); }
+                buyer.SetStatue(true);
+                break;
+            default:
+                break;
+        }
     }
 
+    public void ChangeVisibility(bool visible)
+    {
+        if (visible) { this.gameObject.SetActive(true); }
+        else { this.gameObject.SetActive(false); }
+    }
+
+    public void ClickOnCard()
+    {
+        Debug.Log("Me tocaste: " + type);
+        if (clickFlag)
+        {
+            buyer.SetSelectedCard(this);
+        }
+    }
+
+    #region getters and setters
     public string GetName()
     {
-        return name;
+        return cardName;
     }
 
-    public Decorator ApplyEffect()
+    public void SetFlag(bool flag) { clickFlag = flag; }
+
+    public bool GetFlag() { return clickFlag; }
+
+    public void SetBuyer(Player player) { buyer = player;  }
+
+    #endregion
+
+
+    #region monobehaviour
+    public void Start()
     {
-        return effect;
     }
 
-    public virtual void DiscardEffect()
+    public void Update()
     {
-        Debug.Log("Error in Card: Method is not defined in Child");
+        
     }
+#endregion
+
 }
