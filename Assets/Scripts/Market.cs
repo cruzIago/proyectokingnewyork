@@ -7,7 +7,7 @@ public class Market : MonoBehaviour
 {
     //Constants
     protected readonly int SHOWNCARDS_NUM = 3;
-    
+
     //Parameters
     public Stack<Card> deck;//Cartas del mazo sin mostrar
     public Stack<Card> discardedCards;//Pila de descartes
@@ -27,13 +27,15 @@ public class Market : MonoBehaviour
         return shownCards[index];
     }
 
-    public void HideCards() {
+    public void HideCards()
+    {
         foreach (Card c in shownCards) { c.ChangeVisibility(false); }
     }
 
     public void ShowCards()
     {
-        foreach (Card c in shownCards) {
+        foreach (Card c in shownCards)
+        {
             c.ChangeVisibility(true);
             c.SetBuyer(manager.activePlayer);
             c.SetFlag(true);
@@ -48,7 +50,7 @@ public class Market : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 
     //Metodos que no se van a usar

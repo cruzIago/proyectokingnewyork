@@ -18,7 +18,7 @@ public class SceneManager : MonoBehaviour
     public List<Player> players;
     public List<Area> areas;
     public Player activePlayer;
-    protected int activePId;
+    public int activePId;
     protected Turn turn;
     public Market market;
 
@@ -161,7 +161,7 @@ public class SceneManager : MonoBehaviour
         {
             //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
             foreach (Area a in areas) a.movementFlag = false;
-            turn.Market();
+            //turn.Market();
         } else if (turn.getState() == Turn.State.Market)
         {
             foreach (Card c in market.shownCards)
@@ -176,10 +176,10 @@ public class SceneManager : MonoBehaviour
             }
             else {
                 Debug.Log("Sin efecto");
-            }
-            //Cambiar fase
+            }           
         }
-        
+        turn.NextState();
+
     }
 
     /*Evento de pulsado de si*/
@@ -218,9 +218,7 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         StartGame();
-        turn.Move();
-        //turn.RollDice();
-        
+        turn.StartTurn(activePlayer, Turn.State.Begining, this);
     }
 
     void Update()

@@ -8,6 +8,7 @@ public class Turn : MonoBehaviour
 {
     //Enumeration
     public enum State {Begining, ThrowDice, SolveDice, Movement, Market, EndTurn};
+    private int NUMSTATES = 6;
     //Parameters
     protected SceneManager manager;
     protected Player activePlayer;
@@ -36,7 +37,28 @@ public class Turn : MonoBehaviour
     /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
     public void NextState()
     {
-        currentState++;//Test please
+        currentState++;
+        switch (currentState)
+        {
+            case State.ThrowDice:
+                RollDice();
+                break;
+            case State.SolveDice:
+                SolveDice();
+                break;
+            case State.Movement:
+                Move();
+                break;
+            case State.Market:
+                Market();
+                break;
+            case State.EndTurn:
+                ChangePlayer();
+                EndTurn();
+                break;
+            default:
+                break;
+        }
     }
 
     /*Lanza los dados*/
@@ -58,7 +80,6 @@ public class Turn : MonoBehaviour
     /*Fase de movimiento*/
     public void Move()
     {
-        currentState = State.Movement;//TODO: Colocar donde debe
         //Muestra el mensaje de la GUI de que entra en fase de movimiento
         manager.panel.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
@@ -102,7 +123,6 @@ public class Turn : MonoBehaviour
     /*Fase de mercado*/
     public void Market()
     {
-        currentState = State.Market;
         Debug.Log("Entro en market");
         //All Market Logic
         manager.market.ShowCards();
@@ -110,10 +130,18 @@ public class Turn : MonoBehaviour
     }
 
     /*Cambia al jugador indicado y vuelve al estado inicial*/
-    public void ChangePlayer(Player nextPlayer)
+    public void ChangePlayer()
     {
         Debug.Log("CHANGE PLAYER");
-        activePlayer = nextPlayer;
+        int activePlayerId = manager.players.IndexOf(activePlayer);
+        if (activePlayerId + 1 == manager.players.Count)
+        {
+            activePlayerId = 0;
+        } else
+        {
+            activePlayerId += 1;
+        }
+        activePlayer = manager.players[activePlayerId];
         currentState = State.Begining;
     }
 
