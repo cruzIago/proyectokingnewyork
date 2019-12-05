@@ -10524,7 +10524,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-204030
+  m_Name: pb_Mesh-34346
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -21545,6 +21545,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1510986603}
+    - target: {fileID: 2762628362439290244, guid: ac2e0db5092fe7044a0976998afeb37e,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac2e0db5092fe7044a0976998afeb37e, type: 3}
 --- !u!1001 &7736882680210760533
