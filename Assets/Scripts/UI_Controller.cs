@@ -56,7 +56,7 @@ public class UI_Controller : MonoBehaviour
             maxIter++;
             newIndex--;
             isAdded = false;
-            if (newIndex <0)
+            if (newIndex < 0)
             {
                 newIndex = 5;
             }
@@ -82,23 +82,28 @@ public class UI_Controller : MonoBehaviour
      */
     void nextCharacter(CharacterFrame parent)
     {
-        bool isChanged=false;
+        bool isChanged = false;
         bool isAdded = false;
         int newIndex = parent.charIndex;
         int maxIter = 0;
-        while (!isChanged && maxIter < 10) {
+        while (!isChanged && maxIter < 10)
+        {
             maxIter++;
             newIndex++;
             isAdded = false;
-            if (newIndex> 5) {
+            if (newIndex > 5)
+            {
                 newIndex = 0;
             }
-            foreach (CharacterFrame ch in charactersInScreen) {
-                if (ch.charIndex == newIndex) {
+            foreach (CharacterFrame ch in charactersInScreen)
+            {
+                if (ch.charIndex == newIndex)
+                {
                     isAdded = true;
                 }
             }
-            if (!isAdded) {
+            if (!isAdded)
+            {
                 parent.charIndex = newIndex;
                 parent.characterSprite = listCharacterFrames[parent.charIndex].characterSprite;
                 parent.characterName = listCharacterFrames[parent.charIndex].characterName;
@@ -106,7 +111,7 @@ public class UI_Controller : MonoBehaviour
                 isChanged = true;
             }
         }
-        
+
     }
 
     #endregion
