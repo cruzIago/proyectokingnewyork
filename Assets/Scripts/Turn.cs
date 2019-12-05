@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*Clase que gestiona todo el flujo de un turno*/
-public class Turn
+public class Turn : MonoBehaviour
 {
     //Enumeration
     public enum State {Begining, ThrowDice, SolveDice, Movement, Market, EndTurn};
@@ -13,9 +13,20 @@ public class Turn
     protected Player activePlayer;
     protected State currentState;
 
+    [SerializeField]
+    private GameObject diceBoardPrefab;
+    private GameObject diceBoard;
+
     //Methods
     /*Constructor*/
     public Turn(Player activePlayer, State currentState, SceneManager manager)
+    {
+        this.activePlayer = activePlayer;
+        this.currentState = currentState;
+        this.manager = manager;
+    }
+
+    public void StartTurn(Player activePlayer, State currentState, SceneManager manager)
     {
         this.activePlayer = activePlayer;
         this.currentState = currentState;
@@ -34,6 +45,8 @@ public class Turn
         //Roll
         //Keep
         //ReRoll
+        diceBoard = Instantiate(diceBoardPrefab);
+        
     }
 
     /*Aplica los efectos de los dados*/
@@ -45,6 +58,7 @@ public class Turn
     /*Fase de movimiento*/
     public void Move()
     {
+        currentState = State.Movement;//TODO: Colocar donde debe
         //Muestra el mensaje de la GUI de que entra en fase de movimiento
         manager.panel.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
@@ -88,14 +102,17 @@ public class Turn
     /*Fase de mercado*/
     public void Market()
     {
+        currentState = State.Market;
         Debug.Log("Entro en market");
         //All Market Logic
+        manager.market.ShowCards();
         manager.panel.gameObject.SetActive(false);
     }
 
     /*Cambia al jugador indicado y vuelve al estado inicial*/
     public void ChangePlayer(Player nextPlayer)
     {
+        Debug.Log("CHANGE PLAYER");
         activePlayer = nextPlayer;
         currentState = State.Begining;
     }
@@ -126,5 +143,9 @@ public class Turn
         manager.buttonNo.gameObject.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
         textPanel.text = "¿Quieres moverte?";
+    }
+
+    public State getState() {
+        return currentState;
     }
 }

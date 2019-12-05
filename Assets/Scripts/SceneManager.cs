@@ -20,7 +20,7 @@ public class SceneManager : MonoBehaviour
     public Player activePlayer;
     protected int activePId;
     protected Turn turn;
-    protected Market market;
+    public Market market;
 
     //UI
     public Button buttonTurn;
@@ -28,6 +28,10 @@ public class SceneManager : MonoBehaviour
     public Button buttonNo;
     public Button buttonOk;
     public GameObject panel;
+
+    [SerializeField]
+    private GameObject turnPrefab;
+    
 
     //Methods
     /*Comienza el siguiente turno*/
@@ -129,7 +133,10 @@ public class SceneManager : MonoBehaviour
         foreach (Area a in areas) a.setManager(this);
         panel.SetActive(false);
         if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
-        turn = new Turn(activePlayer, Turn.State.Begining, this);
+        //turn = new Turn(activePlayer, Turn.State.Begining, this);
+        turn = Instantiate(turnPrefab).GetComponent<Turn>();
+        market.HideCards();
+        turn.StartTurn(activePlayer, Turn.State.Begining, this);
     }
 
     /*Inicializa la visibilidad de todos los botones*/
@@ -150,9 +157,29 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de continuar*/
     public void OnClickConfirm()
     {
-        //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
-        foreach (Area a in areas) a.movementFlag = false;
-        turn.Market();
+        if (turn.getState() == Turn.State.Movement)
+        {
+            //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
+            foreach (Area a in areas) a.movementFlag = false;
+            turn.Market();
+        } else if (turn.getState() == Turn.State.Market)
+        {
+            foreach (Card c in market.shownCards)
+            {
+                c.SetFlag(false);
+            }
+            Card card = activePlayer.GetSelectedCard();
+            if (card != null)
+            {
+                card.ApplyEffect();
+                activePlayer.SetSelectedCard(null);
+            }
+            else {
+                Debug.Log("Sin efecto");
+            }
+            //Cambiar fase
+        }
+        
     }
 
     /*Evento de pulsado de si*/
@@ -192,17 +219,8 @@ public class SceneManager : MonoBehaviour
     {
         StartGame();
         turn.Move();
-        //No borrar, se va a usar en futuras pruebas
-        /*market = new Market();
-        Decorator e = new Decorator();//Testing
-        market.deck.Push(new Card("Carta 1", e, Card.CardType.Permanent));
-        market.deck.Push(new Card("Carta 2", e, Card.CardType.Permanent));
-        market.deck.Push(new Card("Carta 3", e, Card.CardType.Discard));
-        market.deck.Push(new Card("Carta 4", e, Card.CardType.Permanent));
-        market.deck.Push(new Card("Carta 5", e, Card.CardType.Discard));
-        market.deck.Push(new Card("Carta 6", e, Card.CardType.Permanent));
-        market.ShuffleDeck();
-        while (market.deck.Count != 0) Debug.Log("Carta que sale: " + market.deck.Pop().GetName());*/
+        //turn.RollDice();
+        
     }
 
     void Update()
