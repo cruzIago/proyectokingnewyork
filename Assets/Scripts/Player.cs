@@ -75,7 +75,8 @@ public class Player : MonoBehaviour
         Debug.Log("I'm buying this card: " + targetCard.GetName());
         deck.Add(targetCard);//TODO: Delete
         ChangeEnergy(-cost); //Test!
-        targetCard.ApplyEffect(this);
+        targetCard.SetBuyer(this);
+        targetCard.ApplyEffect();
     }
 
     /*Mueve al jugador al area seleccionada*/

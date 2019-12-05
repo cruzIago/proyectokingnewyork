@@ -12,6 +12,7 @@ public class Market : MonoBehaviour
     public Stack<Card> deck;//Cartas del mazo sin mostrar
     public Stack<Card> discardedCards;//Pila de descartes
     public List<Card> shownCards;//Cartas para comprar
+    [SerializeField] private SceneManager manager;
 
     //Methods
     /*Constructor*/
@@ -32,7 +33,11 @@ public class Market : MonoBehaviour
 
     public void ShowCards()
     {
-        foreach (Card c in shownCards) { c.ChangeVisibility(true); }
+        foreach (Card c in shownCards) {
+            c.ChangeVisibility(true);
+            c.SetBuyer(manager.activePlayer);
+            c.SetFlag(true);
+        }
     }
 
     private void Start()

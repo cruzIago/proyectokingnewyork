@@ -12,11 +12,14 @@ public class Card : MonoBehaviour
     [SerializeField] private CardType type;
     public Sprite cardImage;
     SceneManager manager;
+    private bool clickFlag = false;
+    Player buyer;
 
 
     //Methods
-    public void ApplyEffect(Player buyer)
+    public void ApplyEffect()
     {
+        Debug.Log("Se ha activado el efecto " + type + " desde el siñor: " + buyer.GetMonsterName());
         switch (type)
         {
             case CardType.Health:
@@ -41,11 +44,26 @@ public class Card : MonoBehaviour
         else { this.gameObject.SetActive(false); }
     }
 
+    public void OnMouseUp()
+    {
+        if (clickFlag)
+        {
+            clickFlag = false;
+            ApplyEffect();//Igual moverlo a otro lado si se va a hacer confirmacion
+        }
+    }
+
     #region getters and setters
     public string GetName()
     {
         return cardName;
     }
+
+    public void SetFlag(bool flag) { clickFlag = flag; }
+
+    public bool GetFlag() { return clickFlag; }
+
+    public void SetBuyer(Player player) { buyer = player;  }
 
     #endregion
 
