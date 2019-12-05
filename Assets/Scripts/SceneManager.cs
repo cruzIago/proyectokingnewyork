@@ -151,9 +151,29 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de continuar*/
     public void OnClickConfirm()
     {
-        //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
-        foreach (Area a in areas) a.movementFlag = false;
-        turn.Market();
+        if (turn.getState() == Turn.State.Movement)
+        {
+            //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
+            foreach (Area a in areas) a.movementFlag = false;
+            turn.Market();
+        } else if (turn.getState() == Turn.State.Market)
+        {
+            foreach (Card c in market.shownCards)
+            {
+                c.SetFlag(false);
+            }
+            Card card = activePlayer.GetSelectedCard();
+            if (card != null)
+            {
+                card.ApplyEffect();
+                activePlayer.SetSelectedCard(null);
+            }
+            else {
+                Debug.Log("Sin efecto");
+            }
+            //Cambiar fase
+        }
+        
     }
 
     /*Evento de pulsado de si*/

@@ -11,7 +11,7 @@ public class Card : MonoBehaviour
     string cardName;
     [SerializeField] private CardType type;
     public Sprite cardImage;
-    SceneManager manager;
+    [SerializeField] SceneManager manager;
     private bool clickFlag = false;
     Player buyer;
 
@@ -44,12 +44,12 @@ public class Card : MonoBehaviour
         else { this.gameObject.SetActive(false); }
     }
 
-    public void OnMouseUp()
+    public void ClickOnCard()
     {
+        Debug.Log("Me tocaste: " + type);
         if (clickFlag)
         {
-            clickFlag = false;
-            ApplyEffect();//Igual moverlo a otro lado si se va a hacer confirmacion
+            buyer.SetSelectedCard(this);
         }
     }
 

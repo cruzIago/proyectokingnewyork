@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     List<Card> deck;//Permanentes
     List<Decorator> effects;
     Vector3 position;
+    private Card selectedCard = null;
 
     //Methods
 
@@ -177,6 +178,16 @@ public class Player : MonoBehaviour
     public bool HasStatue()
     {
         return hasStatue;
+    }
+
+    public void SetSelectedCard(Card c)
+    {
+        selectedCard = c;
+    }
+
+    public Card GetSelectedCard()
+    {
+        return selectedCard;
     }
     #endregion
 }

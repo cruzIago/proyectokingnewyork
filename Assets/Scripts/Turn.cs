@@ -45,6 +45,7 @@ public class Turn
     /*Fase de movimiento*/
     public void Move()
     {
+        currentState = State.Movement;//TODO: Colocar donde debe
         //Muestra el mensaje de la GUI de que entra en fase de movimiento
         manager.panel.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
@@ -88,6 +89,7 @@ public class Turn
     /*Fase de mercado*/
     public void Market()
     {
+        currentState = State.Market;
         Debug.Log("Entro en market");
         //All Market Logic
         manager.market.ShowCards();
@@ -97,6 +99,7 @@ public class Turn
     /*Cambia al jugador indicado y vuelve al estado inicial*/
     public void ChangePlayer(Player nextPlayer)
     {
+        Debug.Log("CHANGE PLAYER");
         activePlayer = nextPlayer;
         currentState = State.Begining;
     }
@@ -127,5 +130,9 @@ public class Turn
         manager.buttonNo.gameObject.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
         textPanel.text = "¿Quieres moverte?";
+    }
+
+    public State getState() {
+        return currentState;
     }
 }
