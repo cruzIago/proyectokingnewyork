@@ -8,6 +8,7 @@ public class Turn : MonoBehaviour
 {
     //Enumeration
     public enum State {Begining, ThrowDice, SolveDice, Movement, Market, EndTurn};
+    private int NUMSTATES = 6;
     //Parameters
     protected SceneManager manager;
     protected Player activePlayer;
@@ -36,7 +37,28 @@ public class Turn : MonoBehaviour
     /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
     public void NextState()
     {
-        currentState++;//Test please
+        currentState++;
+        switch (currentState)
+        {
+            case State.ThrowDice:
+                RollDice();
+                break;
+            case State.SolveDice:
+                SolveDice();
+                break;
+            case State.Movement:
+                Move();
+                break;
+            case State.Market:
+                Market();
+                break;
+            case State.EndTurn:
+                //manager.NextTurn();
+                //EndTurn();
+                break;
+            default:
+                break;
+        }
     }
 
     /*Lanza los dados*/
@@ -104,12 +126,14 @@ public class Turn : MonoBehaviour
     {
         Debug.Log("Entro en market");
         //All Market Logic
+        manager.market.ShowCards();
         manager.panel.gameObject.SetActive(false);
     }
 
     /*Cambia al jugador indicado y vuelve al estado inicial*/
     public void ChangePlayer(Player nextPlayer)
     {
+        Debug.Log("CHANGE PLAYER");
         activePlayer = nextPlayer;
         currentState = State.Begining;
     }
@@ -140,5 +164,9 @@ public class Turn : MonoBehaviour
         manager.buttonNo.gameObject.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
         textPanel.text = "¿Quieres moverte?";
+    }
+
+    public State getState() {
+        return currentState;
     }
 }

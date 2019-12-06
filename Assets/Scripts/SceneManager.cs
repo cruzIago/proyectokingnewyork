@@ -20,9 +20,9 @@ public class SceneManager : MonoBehaviour
     public List<Player> players;
     public List<Area> areas;
     public Player activePlayer;
-    protected int activePId;
+    public int activePId;
     protected Turn turn;
-    protected Market market;
+    public Market market;
 
     //UI
     public Button buttonTurn;
@@ -137,6 +137,7 @@ public class SceneManager : MonoBehaviour
         if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
         //turn = new Turn(activePlayer, Turn.State.Begining, this);
         turn = Instantiate(turnPrefab).GetComponent<Turn>();
+        market.HideCards();
         turn.StartTurn(activePlayer, Turn.State.Begining, this);
     }
 
@@ -158,9 +159,29 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de continuar*/
     public void OnClickConfirm()
     {
-        //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
-        foreach (Area a in areas) a.movementFlag = false;
-        turn.Market();
+        if (turn.getState() == Turn.State.Movement)
+        {
+            //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
+            foreach (Area a in areas) a.movementFlag = false;
+            //turn.Market();
+        } else if (turn.getState() == Turn.State.Market)
+        {
+            foreach (Card c in market.shownCards)
+            {
+                c.SetFlag(false);
+            }
+            Card card = activePlayer.GetSelectedCard();
+            if (card != null)
+            {
+                card.ApplyEffect();
+                activePlayer.SetSelectedCard(null);
+            }
+            else {
+                Debug.Log("Sin efecto");
+            }           
+        }
+        turn.NextState();
+
     }
 
     /*Evento de pulsado de si*/
@@ -233,9 +254,7 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         StartGame();
-        turn.Move();
-        //turn.RollDice();
-        
+        turn.StartTurn(activePlayer, Turn.State.Begining, this);
     }
 
     void Update()
