@@ -7,8 +7,8 @@ public class Area : MonoBehaviour
 {
     //Parameters
     public string areaName;
-    protected int unitsCount;
-    protected List<Tile> tiles;
+    public int unitsCount;
+    public List<ITile> tiles;
     public List<Player> playersInArea;
     protected Vector3 position;
     protected Vector3 position2;

@@ -24,13 +24,14 @@ public class Player : MonoBehaviour
     List<Card> deck;//Permanentes
     List<Decorator> effects;
     Vector3 position;
+    private SceneManager manager;
     private Card selectedCard = null;
-
     //Methods
 
     /*Constructor*/
-    public Player(string playerName, string monsterName, Vector3 startingPos)
+    public void InitPlayer(SceneManager manager, string playerName, string monsterName, Vector3 startingPos)
     {
+        this.manager = manager;
         this.playerName = playerName;
         this.monsterName = monsterName;
         this.position = startingPos;
@@ -50,12 +51,14 @@ public class Player : MonoBehaviour
         this.remainingHealth += life;
         if (this.remainingHealth > maxHealth) { this.remainingHealth = maxHealth; }
         if (this.remainingHealth < 0) {this.remainingHealth = 0; Debug.Log("He muerto"); }
+        Debug.Log(life + " life");
     }
 
     /*Modifica la fama del jugador dentro del rango aceptable y desata los eventos que se requieran*/
     public void ChangeStars(int stars)
     {
         this.stars += stars;
+        Debug.Log(stars + "starts");
         if (this.stars >= MAX_STARS)
         {
             this.stars = MAX_STARS;
@@ -108,7 +111,32 @@ public class Player : MonoBehaviour
     public void Attack(int damage)
     {
         Debug.Log(damage + " damage to other Monstas");
+        
+        manager.AttackOtherPlayers(this, damage);
+        
     }
+
+    public void Ouch(int ouches)
+    {
+        if (ouches == 0)
+            return;
+        manager.Ouch(this, ouches);
+        Debug.Log(ouches + " ouches");
+    }
+
+    public void Destruction(int destructions)
+    {
+        if (destructions == 0)
+            return;
+        Debug.Log(destructions + " destructions");
+    }
+
+
+    public bool IsInManhattan()
+    {
+        return currentArea.GetName().Contains("Manhattan");
+    }
+    
 
     #region Monobehaviour
     /*Inicializacion del GameObject*/
