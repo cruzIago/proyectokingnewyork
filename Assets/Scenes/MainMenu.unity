@@ -1976,14 +1976,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listCharacterFrames:
-  - {fileID: 4918229624718084921, guid: e5c9072ae69cf43489f470b9f1b624c0, type: 3}
-  - {fileID: 7952168041400158370, guid: a5387969dfc1f444982f67f3f4356829, type: 3}
-  - {fileID: 4935214314077249325, guid: 5a9ed96c64ee04a40a6a4aace06e278a, type: 3}
-  - {fileID: 2495789937538294935, guid: 803c82dc3c980cc46a3586f18d4946d5, type: 3}
-  - {fileID: 2298002790617815722, guid: 99bc0c77511bd9840b83d7051773f203, type: 3}
-  - {fileID: 5463166807621288121, guid: 0d21542b1413e264c9495a6dc90d8657, type: 3}
+  - {fileID: 1786090898682500535, guid: e5c9072ae69cf43489f470b9f1b624c0, type: 3}
+  - {fileID: 6894500711665441361, guid: a5387969dfc1f444982f67f3f4356829, type: 3}
+  - {fileID: 188511523293880036, guid: 5a9ed96c64ee04a40a6a4aace06e278a, type: 3}
+  - {fileID: 7669050723148229189, guid: 803c82dc3c980cc46a3586f18d4946d5, type: 3}
+  - {fileID: 1523619010508543244, guid: 99bc0c77511bd9840b83d7051773f203, type: 3}
+  - {fileID: 3832089344664710246, guid: 0d21542b1413e264c9495a6dc90d8657, type: 3}
   characterContainer: {fileID: 1823318690}
   numberPlayers: {fileID: 1436646301}
+  startGameButton: {fileID: 148458941}
   initialCharacters: 2
 --- !u!1 &748838199
 GameObject:
