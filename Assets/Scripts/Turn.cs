@@ -16,7 +16,7 @@ public class Turn : MonoBehaviour
 
     [SerializeField]
     private GameObject diceBoardPrefab;
-    private GameObject diceBoard;
+    private DiceBoard diceBoard;
 
     //Methods
     /*Constructor*/
@@ -67,7 +67,7 @@ public class Turn : MonoBehaviour
         //Roll
         //Keep
         //ReRoll
-        diceBoard = Instantiate(diceBoardPrefab);
+        diceBoard = Instantiate(diceBoardPrefab).GetComponent<DiceBoard>();
         
     }
 
@@ -75,6 +75,7 @@ public class Turn : MonoBehaviour
     public void SolveDice()
     {
         //Apply Effects
+        diceBoard.SolveDice(activePlayer);
     }
 
     /*Fase de movimiento*/

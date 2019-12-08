@@ -61,4 +61,9 @@ public class DiceBoard : MonoBehaviour
         }
     }
 
+    public void SolveDice(Player player)
+    {
+        checker.SolveDice(player);
+    }
+
 }

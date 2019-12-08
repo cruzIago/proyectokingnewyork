@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 /*Clase que gestiona la escena de desarrollo del juego*/
 public class SceneManager : MonoBehaviour
 {
@@ -211,6 +213,40 @@ public class SceneManager : MonoBehaviour
             //Comprueba que el área no sea Manhattan, que tenga menos de 2 jugadores y que no sea el área actual
             if (!a.GetName().Contains("Manhattan") && a.playersInArea.Count < 2
                 && a.GetName() != activePlayer.currentArea.GetName()) { a.movementFlag = true; }
+        }
+    }
+
+    public void AttackOtherPlayers(Player currentPlayer, int damage)
+    {
+        foreach( Player player in players)
+        {
+            if(currentPlayer.IsInManhattan() != player.IsInManhattan())
+            {
+                player.ChangeLife(-damage);
+            }
+        }
+
+    }
+
+    public void Ouch(Player player, int ouches)
+    {
+        if (ouches == 1)
+        {
+            Area playerArea = player.currentArea;
+            player.ChangeLife(-playerArea.unitsCount);
+
+        }else if(ouches == 2)
+        {
+
+            Area playerArea = player.currentArea;
+            playerArea.DamageAllMonstersOnArea();
+
+        }else if(ouches >= 3)
+        {
+            foreach(Area area in areas)
+            {
+                area.DamageAllMonstersOnArea();
+            }
         }
     }
 
