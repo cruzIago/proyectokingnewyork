@@ -14,8 +14,10 @@ public class SceneManager : MonoBehaviour
     //UX Interface
 
     #region UX Parameters
-    public List<RawImage> playersInfo;
-    public RawImage pInfoPrefab;
+    public HUDCharacter HUDCharPrefab;
+    private List<HUDCharacter> HUDCharacters;
+    public GameObject layoutCharsInGame;
+
     public Player playerPrefab;
     public Canvas canvas;
 
@@ -25,6 +27,9 @@ public class SceneManager : MonoBehaviour
     public Button buttonNo;
     public Button buttonOk;
     public GameObject panel;
+    public Button buttonRethrow;
+    public Button buttonContinue;
+    public GameObject DiceHUD;
     #endregion
 
     #region Game Parameters
@@ -35,6 +40,7 @@ public class SceneManager : MonoBehaviour
     protected Turn turn;
     [SerializeField] private GameObject turnPrefab;
     public Market market;
+    public GameObject DiceBoardPos;
     #endregion
 
     //Methods
@@ -42,15 +48,17 @@ public class SceneManager : MonoBehaviour
     #region Game Flow
     //Methods
     /*Comienza el siguiente turno*/
-    protected void NextTurn()
+    public void NextTurn()
     {
         HighlightActivePlayer(false);
-        activePId++;
-        if (activePId >= players.Count)
-        {
-            activePId = 0;
-        }
-        activePlayer = players[activePId];
+        do {
+            activePId++;
+            if (activePId >= players.Count)
+            {
+                activePId = 0;
+            }
+            activePlayer = players[activePId];
+        } while (activePlayer.remainingHealth <= 0);
         turn.ChangePlayer(activePlayer);
         HighlightActivePlayer(true);
     }
@@ -60,13 +68,16 @@ public class SceneManager : MonoBehaviour
         UI_Controller UIController = GameObject.Find("selectCharacterManager").GetComponent<UI_Controller>();
         List<CharacterFrame> characterFrames = UIController.GetCharactersInScreen();
         players = new List<Player>();
+        HUDCharacters = new List<HUDCharacter>();
         foreach (CharacterFrame character in characterFrames)
         {
             Player p = Instantiate(playerPrefab);
-            p.SetPlayerName("Dummy");//Should be removed
-            p.SetMonsterName(character.characterName);
+            p.InitPlayer(this, "Dummy", character.characterName);
             //TODO: Establecer modelo en funcion del nombre
             players.Add(p);
+            HUDCharacter c = Instantiate(HUDCharPrefab, layoutCharsInGame.transform);
+            c.setId(character.charIndex);
+            HUDCharacters.Add(c);
         }
     }
 
@@ -81,11 +92,12 @@ public class SceneManager : MonoBehaviour
             newPInfo.transform.localPosition = new Vector3(-319, 165 - 71 * i, 0);
             playersInfo.Add(newPInfo);
         }*/
+        
 
         initButtons();
         activePlayer = players[0];
         activePId = 0;
-        //HighlightActivePlayer(true);
+        HighlightActivePlayer(true);
         foreach (Area a in areas) a.setManager(this);
         foreach (Player p in players)
         {
@@ -94,11 +106,14 @@ public class SceneManager : MonoBehaviour
         }
         
         panel.SetActive(false);
+        DiceHUD.SetActive(false);
         if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
         //turn = new Turn(activePlayer, Turn.State.Begining, this);
         turn = Instantiate(turnPrefab).GetComponent<Turn>();
         market.HideCards();
-        turn.StartTurn(activePlayer, Turn.State.Begining, this);
+        turn.diceBoardPos = DiceBoardPos;
+        turn.StartTurn(activePlayer, Turn.State.ThrowDice, this);
+        
     }
 
     //TODO Real functionality
@@ -135,62 +150,44 @@ public class SceneManager : MonoBehaviour
     /*Actualiza la GUI*/
     public void UpdateGUI()
     {
-        //Cambio de Textos
-        for (int i = 0; i < playersInfo.Count; i++)
+        for(int i = 0; i < HUDCharacters.Count; i++)
         {
-            Text[] texts = playersInfo[i].GetComponentsInChildren<Text>();
-            foreach (Text t in texts)
+            changeUILifes(players[i].remainingHealth, HUDCharacters[i]);
+            changeUIFame(players[i].stars, HUDCharacters[i]);
+            changeUIEnergy(players[i].energy, HUDCharacters[i]);
+            if(players[i].remainingHealth <= 0)
             {
-                switch (t.tag)
-                {
-                    case "healthInfo":
-                        changeUINumber(players[i].remainingHealth, t, true);
-                        break;
-                    case "starsInfo":
-                        changeUINumber(players[i].stars, t, true);
-                        break;
-                    case "energyInfo":
-                        changeUINumber(players[i].energy, t, false);
-                        break;
-                    case "cardsInfo":
-                        changeUINumber(players[i].GetNumberOfCards(), t, true);
-                        break;
-                    default:
-                        Debug.Log("Error, should never happen. (UpdateGUI/switch)");
-                        break;
-                }
-            }
-            if (players[i].remainingHealth <= 0)
-            {
-                MarkDeadPlayer(playersInfo[i]);
+                MarkDeadPlayer(HUDCharacters[i]);
             }
         }
     }
 
     /*Cambia el el numero de un elemento concreto de la UI*/
-    protected void changeUINumber(int number, Text text, bool leftOfIcon)
+    protected void changeUILifes(int number, HUDCharacter HUDChar)
     {
-        if (leftOfIcon)
-        {
-            text.text = number + "x";
-        }
-        else
-        {
-            text.text = "x" + number;
-        }
+        HUDChar.setLifes(number);
+    }
+
+    protected void changeUIEnergy(int number, HUDCharacter HUDChar)
+    {
+        HUDChar.setEnergy(number);
+    }
+
+    protected void changeUIFame(int number, HUDCharacter HUDChar)
+    {
+        HUDChar.setFame(number);
     }
 
     /*Hace la animacion de marcar o desmarcar la tarjeta del jugador activo*/
     protected void HighlightActivePlayer(bool highlight)
     {
-        Animator animator = playersInfo[activePId].GetComponent<Animator>();
-        animator.SetBool("isHighlighted", highlight);
+        HUDCharacters[activePId].setFrameActive(highlight);
     }
 
     /*Marca la tarjeta de un jugador como muerto haciendola transparente*/
-    protected void MarkDeadPlayer(RawImage deadPInfo)
+    protected void MarkDeadPlayer(HUDCharacter HUDChar)
     {
-        deadPInfo.CrossFadeAlpha(0.3f, 0.5f, false);
+        HUDChar.gameObject.SetActive(false);
     }
     #endregion
 
@@ -275,6 +272,25 @@ public class SceneManager : MonoBehaviour
                 && a.GetName() != activePlayer.currentArea.GetName()) { a.movementFlag = true; }
         }
     }
+
+    public void OnClickRethrow()
+    {
+        turn.RethrowDice();
+    }
+
+    public void OnClickContinue()
+    {
+        turn.NextState();
+    }
+
+    public void createDiceHUD()
+    {
+        DiceHUD.SetActive(true);
+    }
+    public void hideDiceHUD()
+    {
+        DiceHUD.SetActive(false);
+    }
     #endregion
 
     #region Effects
@@ -320,14 +336,25 @@ public class SceneManager : MonoBehaviour
     {
         CollectPlayers();
         StartGame();
-        turn.StartTurn(activePlayer, Turn.State.Begining, this);
         //Testing
         //turn.Move();
-        turn.Market();
+        //turn.Market();
     }
 
     void Update()
     {
+        //TODO: Borar pls
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            players[0].ChangeLife(-3);
+            players[1].ChangeLife(-5);
+            players[2].ChangeStars(3);
+            UpdateGUI();
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            NextTurn();
+        }
     }
     #endregion
 

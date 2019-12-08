@@ -80,14 +80,14 @@ public class DieChecker : MonoBehaviour
             textResult += dieResultNames[i] + ": " + results[i] + "\n";
         }
 
-        Debug.Log(textResult);
+        //Debug.Log(textResult);
     }
 
     public void SolveDice(Player player)
     {
         for (int i = 0; i < results.Length; i++)
         {
-            dieResult dieSide =(dieResult) i;
+            dieResult dieSide = (dieResult) i;
 
             //cantidad de dados de resultado i
             switch (dieSide) {
@@ -102,15 +102,13 @@ public class DieChecker : MonoBehaviour
                     break;
                 case dieResult.ENERGY:
                     player.ChangeEnergy(results[i]);
-                break;
+                    break;
                 case dieResult.HEAL:
                     player.ChangeLife(results[i]);
                     break;
                 case dieResult.OUCH:
                     player.Ouch(results[i]);
                     break;
-
-
             }
         }
     }

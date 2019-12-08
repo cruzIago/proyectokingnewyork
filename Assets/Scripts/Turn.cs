@@ -18,6 +18,7 @@ public class Turn : MonoBehaviour
     [SerializeField]
     private GameObject diceBoardPrefab;
     private DiceBoard diceBoard;
+    public GameObject diceBoardPos;
     #endregion
 
     //Methods
@@ -36,15 +37,19 @@ public class Turn : MonoBehaviour
         //Roll
         //Keep
         //ReRoll
-        diceBoard = Instantiate(diceBoardPrefab).GetComponent<DiceBoard>();
-
+        diceBoard = Instantiate(diceBoardPrefab, diceBoardPos.transform).GetComponent<DiceBoard>();
+        diceBoard.turn = this;
+        diceBoard.mainCamera = Camera.main;
+        manager.createDiceHUD();
     }
 
     /*Aplica los efectos de los dados*/
     public void SolveDice()
     {
         //Apply Effects
+        manager.hideDiceHUD();
         diceBoard.SolveDice(activePlayer);
+
     }
 
     /*Fase de movimiento*/
@@ -104,13 +109,10 @@ public class Turn : MonoBehaviour
     {
         Debug.Log("CHANGE PLAYER");
         activePlayer = nextPlayer;
-        currentState = State.Begining;
+        //currentState = State.Begining;
+        NextState();
     }
 
-    /*Fase de fin de turno*/
-    public void EndTurn()
-    {
-    }
     #endregion
 
     #region Flow Methods
@@ -119,6 +121,7 @@ public class Turn : MonoBehaviour
         this.activePlayer = activePlayer;
         this.currentState = currentState;
         this.manager = manager;
+        RollDice();
     }
 
     /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
@@ -140,8 +143,7 @@ public class Turn : MonoBehaviour
                 Market();
                 break;
             case State.EndTurn:
-                //manager.NextTurn();
-                //EndTurn();
+                manager.NextTurn();
                 break;
             default:
                 break;
@@ -169,6 +171,11 @@ public class Turn : MonoBehaviour
         manager.buttonNo.gameObject.SetActive(true);
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
         textPanel.text = "¿Quieres moverte?";
+    }
+
+    public void RethrowDice()
+    {
+        diceBoard.InputedReroll();
     }
     #endregion
 

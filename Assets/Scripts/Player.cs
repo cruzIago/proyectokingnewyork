@@ -29,12 +29,11 @@ public class Player : MonoBehaviour
     //Methods
 
     /*Constructor*/
-    public void InitPlayer(SceneManager manager, string playerName, string monsterName, Vector3 startingPos)
+    public void InitPlayer(SceneManager manager, string playerName, string monsterName)
     {
         this.manager = manager;
         this.playerName = playerName;
         this.monsterName = monsterName;
-        this.position = startingPos;
         this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
         this.stars = 0;
         this.remainingHealth = 10;
@@ -50,8 +49,9 @@ public class Player : MonoBehaviour
     {
         this.remainingHealth += life;
         if (this.remainingHealth > maxHealth) { this.remainingHealth = maxHealth; }
-        if (this.remainingHealth < 0) {this.remainingHealth = 0; Debug.Log("He muerto"); }
+        if (this.remainingHealth < 0) {this.remainingHealth = 0; }
         Debug.Log(life + " life");
+        manager.UpdateGUI();
     }
 
     /*Modifica la fama del jugador dentro del rango aceptable y desata los eventos que se requieran*/
@@ -65,12 +65,14 @@ public class Player : MonoBehaviour
             winner = true;
             //Desata el evento de Game Over
         }
+        manager.UpdateGUI();
     }
 
     /*Modifica la energía del jugador. Nunca puede pagar más energía de la que tenga y no tiene límite máximo*/
     public void ChangeEnergy(int energy)
     {
         this.energy += energy;
+        manager.UpdateGUI();
     }
 
     /*Compra una carta del mercado. Este metodo no elimina esa carta del mercado*/
@@ -113,7 +115,7 @@ public class Player : MonoBehaviour
         Debug.Log(damage + " damage to other Monstas");
         
         manager.AttackOtherPlayers(this, damage);
-        
+        manager.UpdateGUI();
     }
 
     public void Ouch(int ouches)
@@ -122,6 +124,7 @@ public class Player : MonoBehaviour
             return;
         manager.Ouch(this, ouches);
         Debug.Log(ouches + " ouches");
+        manager.UpdateGUI();
     }
 
     public void Destruction(int destructions)
@@ -129,6 +132,7 @@ public class Player : MonoBehaviour
         if (destructions == 0)
             return;
         Debug.Log(destructions + " destructions");
+        manager.UpdateGUI();
     }
 
 
