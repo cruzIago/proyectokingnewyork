@@ -102,7 +102,6 @@ public class SceneManager : MonoBehaviour
         foreach (Player p in players)
         {
             SelectArea(p);
-            p.Move(p.currentArea);
         }
         
         panel.SetActive(false);
@@ -122,22 +121,22 @@ public class SceneManager : MonoBehaviour
         switch (p.GetMonsterName())
         {
             case "Cpt. Fish":
-                p.currentArea = areas[0];         
+                p.Move(areas[3]);         
                 break;
             case "Drakonis":
-                p.currentArea = areas[1];
+                p.Move(areas[5]);
                 break;
             case "Kong":
-                p.currentArea = areas[6];
+                p.Move(areas[6]);
                 break;
             case "Mantis":
-                p.currentArea = areas[3];
+                p.Move(areas[3]);
                 break;
             case "ROB":
-                p.currentArea = areas[4];
+                p.Move(areas[4]);
                 break;
             case "Sheriff":
-                p.currentArea = areas[5];
+                p.Move(areas[5]);
                 break;
             default:
                 print("Vamos no me jodas");

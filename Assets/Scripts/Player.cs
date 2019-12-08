@@ -88,14 +88,18 @@ public class Player : MonoBehaviour
     /*Mueve al jugador al area seleccionada*/
     public void Move(Area targetArea)
     {
-        //Permite que el jugador se mueva de nuevo al area que abandona y lo elimina de la lista
-        if (!currentArea.GetName().Contains("Manhattan")) { currentArea.movementFlag = true; }
-        currentArea.playersInArea.Remove(this);
+        if(currentArea != null)
+        {
+            //Permite que el jugador se mueva de nuevo al area que abandona y lo elimina de la lista
+            if (!currentArea.GetName().Contains("Manhattan")) { currentArea.movementFlag = true; }
+            currentArea.playersInArea.Remove(this);
 
-        //Mueve al jugador de la posicion 2 a la 1 en caso de que hubiese dos jugadores en el area
-        foreach(Player p in currentArea.playersInArea) {
-            p.position = currentArea.GetPosition();
-            p.transform.position = position;
+            //Mueve al jugador de la posicion 2 a la 1 en caso de que hubiese dos jugadores en el area
+            foreach (Player p in currentArea.playersInArea)
+            {
+                p.position = currentArea.GetPosition();
+                p.transform.position = position;
+            }
         }
 
         //Cambia el area a la nueva, mete al jugador en la lista y desactiva su flag
