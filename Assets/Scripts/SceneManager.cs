@@ -12,17 +12,12 @@ public class SceneManager : MonoBehaviour
     public bool debugMode = true;
     //Parameters
     //UX Interface
+
     #region UX Parameters
     public List<RawImage> playersInfo;
     public RawImage pInfoPrefab;
+    public Player playerPrefab;
     public Canvas canvas;
-    #endregion
-    public List<Player> players;
-    public List<Area> areas;
-    public Player activePlayer;
-    public int activePId;
-    protected Turn turn;
-    public Market market;
 
     //UI
     public Button buttonTurn;
@@ -30,18 +25,28 @@ public class SceneManager : MonoBehaviour
     public Button buttonNo;
     public Button buttonOk;
     public GameObject panel;
+    #endregion
 
-    [SerializeField]
-    private GameObject turnPrefab;
-    
+    #region Game Parameters
+    private List<Player> players;
+    public List<Area> areas;
+    public Player activePlayer;
+    public int activePId;
+    protected Turn turn;
+    [SerializeField] private GameObject turnPrefab;
+    public Market market;
+    #endregion
 
+    //Methods
+
+    #region Game Flow
     //Methods
     /*Comienza el siguiente turno*/
     protected void NextTurn()
     {
         HighlightActivePlayer(false);
         activePId++;
-        if(activePId >= players.Count)
+        if (activePId >= players.Count)
         {
             activePId = 0;
         }
@@ -50,14 +55,92 @@ public class SceneManager : MonoBehaviour
         HighlightActivePlayer(true);
     }
 
+    protected void CollectPlayers()
+    {
+        UI_Controller UIController = GameObject.Find("selectCharacterManager").GetComponent<UI_Controller>();
+        List<CharacterFrame> characterFrames = UIController.GetCharactersInScreen();
+        players = new List<Player>();
+        foreach (CharacterFrame character in characterFrames)
+        {
+            Player p = Instantiate(playerPrefab);
+            p.SetPlayerName("Dummy");//Should be removed
+            p.SetMonsterName(character.characterName);
+            //TODO: Establecer modelo en funcion del nombre
+            players.Add(p);
+        }
+    }
+
+    /*Inicializa la posicion de los jugadores y relaciona jugadores y areas. Indica jugador activo
+     Instancia las tarjetas de la GUI de cada jugador*/
+    protected void StartGame()
+    {
+
+        /*for (int i = 0; i < players.Count; i++)
+        {
+            RawImage newPInfo = Instantiate(pInfoPrefab, canvas.transform);
+            newPInfo.transform.localPosition = new Vector3(-319, 165 - 71 * i, 0);
+            playersInfo.Add(newPInfo);
+        }*/
+
+        initButtons();
+        activePlayer = players[0];
+        activePId = 0;
+        //HighlightActivePlayer(true);
+        foreach (Area a in areas) a.setManager(this);
+        foreach (Player p in players)
+        {
+            SelectArea(p);
+            //p.currentArea.addPlayer(p);
+            p.Move(p.currentArea);
+        }
+        
+        panel.SetActive(false);
+        if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
+        //turn = new Turn(activePlayer, Turn.State.Begining, this);
+        turn = Instantiate(turnPrefab).GetComponent<Turn>();
+        market.HideCards();
+        turn.StartTurn(activePlayer, Turn.State.Begining, this);
+    }
+
+    //TODO Real functionality
+    protected void SelectArea(Player p)
+    {
+        switch (p.GetMonsterName())
+        {
+            case "Cpt. Fish":
+                p.currentArea = areas[0];         
+                break;
+            case "Drakonis":
+                p.currentArea = areas[1];
+                break;
+            case "Kong":
+                p.currentArea = areas[6];
+                break;
+            case "Mantis":
+                p.currentArea = areas[3];
+                break;
+            case "ROB":
+                p.currentArea = areas[4];
+                break;
+            case "Sheriff":
+                p.currentArea = areas[5];
+                break;
+            default:
+                print("Vamos no me jodas");
+                break;
+        }
+    }
+    #endregion
+
+    #region UI Methods
     /*Actualiza la GUI*/
     public void UpdateGUI()
     {
         //Cambio de Textos
-        for(int i = 0; i < playersInfo.Count; i++)
+        for (int i = 0; i < playersInfo.Count; i++)
         {
             Text[] texts = playersInfo[i].GetComponentsInChildren<Text>();
-            foreach(Text t in texts)
+            foreach (Text t in texts)
             {
                 switch (t.tag)
                 {
@@ -78,7 +161,7 @@ public class SceneManager : MonoBehaviour
                         break;
                 }
             }
-            if(players[i].remainingHealth <= 0)
+            if (players[i].remainingHealth <= 0)
             {
                 MarkDeadPlayer(playersInfo[i]);
             }
@@ -110,37 +193,9 @@ public class SceneManager : MonoBehaviour
     {
         deadPInfo.CrossFadeAlpha(0.3f, 0.5f, false);
     }
+    #endregion
 
-    /*Inicializa la posicion de los jugadores y relaciona jugadores y areas. Indica jugador activo
-     Instancia las tarjetas de la GUI de cada jugador*/
-    protected void StartGame()
-    {
-
-        for(int i = 0; i < players.Count; i++)
-        {
-            RawImage newPInfo = Instantiate(pInfoPrefab, canvas.transform);
-            newPInfo.transform.localPosition = new Vector3(-319, 165 - 71*i, 0);
-            playersInfo.Add(newPInfo);
-        }
-
-        initButtons();
-        activePlayer = players[0];
-        activePId = 0;
-        HighlightActivePlayer(true);
-        foreach (Player p in players)
-        {
-            p.Move(p.currentArea);
-            Debug.Log("Jugadores en " + p.currentArea.GetName() + ": " + p.currentArea.playersInArea.Count);
-        }
-        foreach (Area a in areas) a.setManager(this);
-        panel.SetActive(false);
-        if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
-        //turn = new Turn(activePlayer, Turn.State.Begining, this);
-        turn = Instantiate(turnPrefab).GetComponent<Turn>();
-        market.HideCards();
-        turn.StartTurn(activePlayer, Turn.State.Begining, this);
-    }
-
+    #region Button Methods
     /*Inicializa la visibilidad de todos los botones*/
     protected void initButtons()
     {
@@ -164,7 +219,8 @@ public class SceneManager : MonoBehaviour
             //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
             foreach (Area a in areas) a.movementFlag = false;
             //turn.Market();
-        } else if (turn.getState() == Turn.State.Market)
+        }
+        else if (turn.getState() == Turn.State.Market)
         {
             foreach (Card c in market.shownCards)
             {
@@ -176,9 +232,10 @@ public class SceneManager : MonoBehaviour
                 card.ApplyEffect();
                 activePlayer.SetSelectedCard(null);
             }
-            else {
+            else
+            {
                 Debug.Log("Sin efecto");
-            }           
+            }
         }
         turn.NextState();
 
@@ -215,12 +272,14 @@ public class SceneManager : MonoBehaviour
                 && a.GetName() != activePlayer.currentArea.GetName()) { a.movementFlag = true; }
         }
     }
+    #endregion
 
+    #region Effects
     public void AttackOtherPlayers(Player currentPlayer, int damage)
     {
-        foreach( Player player in players)
+        foreach (Player player in players)
         {
-            if(currentPlayer.IsInManhattan() != player.IsInManhattan())
+            if (currentPlayer.IsInManhattan() != player.IsInManhattan())
             {
                 player.ChangeLife(-damage);
             }
@@ -235,29 +294,42 @@ public class SceneManager : MonoBehaviour
             Area playerArea = player.currentArea;
             player.ChangeLife(-playerArea.unitsCount);
 
-        }else if(ouches == 2)
+        }
+        else if (ouches == 2)
         {
 
             Area playerArea = player.currentArea;
             playerArea.DamageAllMonstersOnArea();
 
-        }else if(ouches >= 3)
+        }
+        else if (ouches >= 3)
         {
-            foreach(Area area in areas)
+            foreach (Area area in areas)
             {
                 area.DamageAllMonstersOnArea();
             }
         }
     }
+    #endregion
 
-    // Monobehaviour Methods
+    #region Monobehaviour
     void Start()
     {
+        CollectPlayers();
         StartGame();
-        turn.StartTurn(activePlayer, Turn.State.Begining, this);
+        //turn.StartTurn(activePlayer, Turn.State.Begining, this);
+        turn.Move();
     }
 
     void Update()
     {
     }
+    #endregion
+
+    #region Getters and Setters
+    public List<Player> GetPlayers()
+    {
+        return players;
+    }
+    #endregion
 }

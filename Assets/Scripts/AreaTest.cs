@@ -8,7 +8,7 @@ public class AreaTest : MonoBehaviour
     //Parameters
     public string areaName;
     protected int unitsCount;
-    protected List<Tile> tiles;
+    ///protected List<Tile> tiles;
     protected List<Player> playersInArea;
     protected Vector3 position;
 
@@ -58,7 +58,6 @@ public class AreaTest : MonoBehaviour
     {
         this.unitsCount = 0;
         this.position = transform.position;
-        Debug.Log("Area " + this.areaName + ": " + this.position);
 
     }
 

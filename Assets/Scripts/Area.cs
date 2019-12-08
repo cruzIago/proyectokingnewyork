@@ -40,7 +40,7 @@ public class Area : MonoBehaviour
     /*Daña a todos los monstruos del juego*/
     public void DamageAllMonsters()
     {
-        foreach (Player p in manager.players) p.ChangeLife(unitsCount * (-1));
+        foreach (Player p in manager.GetPlayers()) p.ChangeLife(unitsCount * (-1));
     }
 
     /*Evento que se dispara al hacer click sobre el area*/
@@ -60,16 +60,21 @@ public class Area : MonoBehaviour
         playersInArea.Add(player);
     }
 
-    private void Start()
+    private void Awake()
     {
-        this.unitsCount = 0;
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
-            if (child.tag == "PivotPos1") { this.position = child.transform.position; }
-            if (child.tag == "PivotPos2") { this.position2 = child.transform.position; }
+            if (child.tag == "PivotPos1") { this.position = child.transform.position;}
+            if (child.tag == "PivotPos2") { this.position2 = child.transform.position;}
         }
         this.position.y += 1;
         this.position2.y += 1;
+    }
+
+    private void Start()
+    {
+        playersInArea = new List<Player>();
+        this.unitsCount = 0;
     }
 
     private void Update()

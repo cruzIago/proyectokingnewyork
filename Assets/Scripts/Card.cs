@@ -26,11 +26,11 @@ public class Card : MonoBehaviour
                 buyer.ChangeLife(1);
                 break;
             case CardType.Idol:
-                foreach (Player p in manager.players) { p.SetIdol(false); }
+                foreach (Player p in manager.GetPlayers()) { p.SetIdol(false); }
                 buyer.SetIdol(true);
                 break;
             case CardType.LibertyStatue:
-                foreach (Player p in manager.players) { p.SetStatue(false); }
+                foreach (Player p in manager.GetPlayers()) { p.SetStatue(false); }
                 buyer.SetStatue(true);
                 break;
             default:

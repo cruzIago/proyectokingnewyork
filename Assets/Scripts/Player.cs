@@ -151,19 +151,11 @@ public class Player : MonoBehaviour
         this.hasStatue = false;
         this.winner = false;
 
-        Debug.Log(this.playerName + ", " +
-            this.monsterName + ", " +
-            this.position + ", " +
-            this.stars + ", " +
-            this.remainingHealth + ", " +
-            this.maxHealth + ", " +
-            this.winner + ", " +
-            this.energy + ".");
     }
 
     private void Update()
     {
-        transform.position = position;
+        //transform.position = position;
     }
     #endregion
 
@@ -178,9 +170,19 @@ public class Player : MonoBehaviour
         return playerName;
     }
 
+    public void SetPlayerName(string name)
+    {
+        playerName = name;
+    }
+
     public string GetMonsterName()
     {
         return monsterName;
+    }
+
+    public void SetMonsterName(string name)
+    {
+        monsterName = name;
     }
 
     public int GetNumberOfCards()

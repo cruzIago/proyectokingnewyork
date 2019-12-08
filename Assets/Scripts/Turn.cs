@@ -6,8 +6,9 @@ using UnityEngine.UI;
 /*Clase que gestiona todo el flujo de un turno*/
 public class Turn : MonoBehaviour
 {
+    #region parameters
     //Enumeration
-    public enum State {Begining, ThrowDice, SolveDice, Movement, Market, EndTurn};
+    public enum State { Begining, ThrowDice, SolveDice, Movement, Market, EndTurn };
     private int NUMSTATES = 6;
     //Parameters
     protected SceneManager manager;
@@ -17,6 +18,7 @@ public class Turn : MonoBehaviour
     [SerializeField]
     private GameObject diceBoardPrefab;
     private DiceBoard diceBoard;
+    #endregion
 
     //Methods
     /*Constructor*/
@@ -27,40 +29,7 @@ public class Turn : MonoBehaviour
         this.manager = manager;
     }
 
-    public void StartTurn(Player activePlayer, State currentState, SceneManager manager)
-    {
-        this.activePlayer = activePlayer;
-        this.currentState = currentState;
-        this.manager = manager;
-    }
-
-    /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
-    public void NextState()
-    {
-        currentState++;
-        switch (currentState)
-        {
-            case State.ThrowDice:
-                RollDice();
-                break;
-            case State.SolveDice:
-                SolveDice();
-                break;
-            case State.Movement:
-                Move();
-                break;
-            case State.Market:
-                Market();
-                break;
-            case State.EndTurn:
-                //manager.NextTurn();
-                //EndTurn();
-                break;
-            default:
-                break;
-        }
-    }
-
+    #region States Methods
     /*Lanza los dados*/
     public void RollDice()
     {
@@ -68,7 +37,7 @@ public class Turn : MonoBehaviour
         //Keep
         //ReRoll
         diceBoard = Instantiate(diceBoardPrefab).GetComponent<DiceBoard>();
-        
+
     }
 
     /*Aplica los efectos de los dados*/
@@ -142,9 +111,45 @@ public class Turn : MonoBehaviour
     public void EndTurn()
     {
     }
+    #endregion
 
-    //Auxiliar methods
+    #region Flow Methods
+    public void StartTurn(Player activePlayer, State currentState, SceneManager manager)
+    {
+        this.activePlayer = activePlayer;
+        this.currentState = currentState;
+        this.manager = manager;
+    }
 
+    /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
+    public void NextState()
+    {
+        currentState++;
+        switch (currentState)
+        {
+            case State.ThrowDice:
+                RollDice();
+                break;
+            case State.SolveDice:
+                SolveDice();
+                break;
+            case State.Movement:
+                Move();
+                break;
+            case State.Market:
+                Market();
+                break;
+            case State.EndTurn:
+                //manager.NextTurn();
+                //EndTurn();
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region Auxiliar Methods
     /*Avisa al jugador que puede moverse haciendo click en un área y habilita el movimiento a las áreas disponibles*/
     public void MoveWithClick()
     {
@@ -165,8 +170,14 @@ public class Turn : MonoBehaviour
         Text textPanel = manager.panel.GetComponentInChildren<Text>();
         textPanel.text = "¿Quieres moverte?";
     }
+    #endregion
 
-    public State getState() {
+    #region Getters Setters
+    public State getState()
+    {
         return currentState;
     }
+    #endregion
+
+
 }
