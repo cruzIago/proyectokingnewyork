@@ -90,7 +90,6 @@ public class SceneManager : MonoBehaviour
         foreach (Player p in players)
         {
             SelectArea(p);
-            //p.currentArea.addPlayer(p);
             p.Move(p.currentArea);
         }
         
@@ -244,6 +243,7 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de si*/
     public void OnClickYes()
     {
+        Debug.Log("FALCON YES");
         buttonYes.gameObject.SetActive(false);
         buttonNo.gameObject.SetActive(false);
         turn.MoveWithClick();
@@ -252,6 +252,7 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de no*/
     public void OnClickNo()
     {
+        Debug.Log("CLICKED ON NO");
         turn.Market();
         panel.SetActive(false);
         buttonYes.gameObject.SetActive(false);
@@ -261,6 +262,8 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de ok*/
     public void OnClickOk()
     {
+        Debug.Log("CLICKED ON OK");
+
         panel.SetActive(false);
         buttonOk.gameObject.SetActive(false);
         CreateConfirmButton();
@@ -317,8 +320,10 @@ public class SceneManager : MonoBehaviour
     {
         CollectPlayers();
         StartGame();
-        //turn.StartTurn(activePlayer, Turn.State.Begining, this);
-        turn.Move();
+        turn.StartTurn(activePlayer, Turn.State.Begining, this);
+        //Testing
+        //turn.Move();
+        turn.Market();
     }
 
     void Update()

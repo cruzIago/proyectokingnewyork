@@ -51,6 +51,8 @@ public class Card : MonoBehaviour
         {
             buyer.SetSelectedCard(this);
         }
+
+        manager.CreateConfirmButton();
     }
 
     #region getters and setters

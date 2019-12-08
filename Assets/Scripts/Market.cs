@@ -30,12 +30,12 @@ public class Market : MonoBehaviour
     public void HideCards()
     {     
         foreach (Card c in shownCards) { c.ChangeVisibility(false); }
-        //marketUI.SetActive(false);
+        if (marketUI != null) { marketUI.SetActive(false); }
     }
 
     public void ShowCards()
     {
-        //marketUI.SetActive(true);
+        if (marketUI != null) { marketUI.SetActive(true); }
         foreach (Card c in shownCards)
         {
             c.ChangeVisibility(true);
@@ -44,9 +44,13 @@ public class Market : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         marketUI = GameObject.Find("Market");
+    }
+    private void Start()
+    {
+        
         this.deck = new Stack<Card>();
         this.discardedCards = new Stack<Card>();
     }
