@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 /**
  *  Controla el flujo de la interfaz
  */
@@ -11,8 +12,9 @@ public class UI_Controller : MonoBehaviour
     private List<CharacterFrame> charactersInScreen; //Personajes que se ven en pantalla actualmente para evitar repeticiones
     public GameObject characterContainer; //Contenedor de los frames de los personajes
     public InputField numberPlayers; // Numero de jugadores, solo como pista visual
-    private int numberCharacters; //Numero de personajes en pantalla
+    public Button startGameButton; //Boton para empezar la partida
 
+    private int numberCharacters; //Numero de personajes en pantalla
     private const int MAX_CHARACTERS = 6; //Minimo y maximo de personajes
     private const int MIN_CHARACTERS = 2;
 
@@ -40,7 +42,38 @@ public class UI_Controller : MonoBehaviour
                 }
             }
         }
+        startGameButton.onClick.AddListener(comenzarPartida);
     }
+    /*
+     * Inicia la partida y envia la lista de los jugadores, ya aleatorizada 
+     */
+    void comenzarPartida()
+    {
+        //Recoger el array de personajes, aleatorizar y enviarlo.
+        //Comprobar si se paso el tutorial alguna vez? mejor hacer siempre click en omitir por ahora
+        //DontDestroy o static?
+        Shuffle(charactersInScreen);
+        Debug.Log(charactersInScreen);
+    }
+
+    /*
+     * Metodo de aleatorizar listas de https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+     * En algunos lados aparece como static, comprobar si es obligatorio
+     */
+    void Shuffle<T>(IList<T> list)
+    {
+        System.Random rng = new System.Random();
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
     #region Cambio de personaje
     /*
      * Cambia al personaje anterior
