@@ -232,9 +232,10 @@ public class SceneManager : MonoBehaviour
             {
                 Debug.Log("Sin efecto");
             }
+            market.HideCards();
         }
         turn.NextState();
-
+        buttonTurn.gameObject.SetActive(false);
     }
 
     /*Evento de pulsado de si*/
@@ -250,7 +251,7 @@ public class SceneManager : MonoBehaviour
     public void OnClickNo()
     {
         Debug.Log("CLICKED ON NO");
-        turn.Market();
+        turn.NextState();
         panel.SetActive(false);
         buttonYes.gameObject.SetActive(false);
         buttonNo.gameObject.SetActive(false);

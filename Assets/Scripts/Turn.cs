@@ -8,7 +8,7 @@ public class Turn : MonoBehaviour
 {
     #region parameters
     //Enumeration
-    public enum State { Begining, ThrowDice, SolveDice, Movement, Market, EndTurn };
+    public enum State { ThrowDice, SolveDice, Movement, Market, EndTurn };
     private int NUMSTATES = 6;
     //Parameters
     protected SceneManager manager;
@@ -49,7 +49,8 @@ public class Turn : MonoBehaviour
         //Apply Effects
         manager.hideDiceHUD();
         diceBoard.SolveDice(activePlayer);
-
+        Destroy(diceBoard.gameObject);
+        NextState();
     }
 
     /*Fase de movimiento*/
@@ -67,13 +68,13 @@ public class Turn : MonoBehaviour
             if (activePlayer.currentArea.GetName().Contains("Sur"))
             {
                 activePlayer.Move(manager.areas[1]);
-                Market();
+                NextState();
             }
             //Si esta en Manhattan Medio, mueve a Manhattan Norte
             else if (activePlayer.currentArea.GetName().Contains("Medio"))
             {
                 activePlayer.Move(manager.areas[2]);
-                Market();
+                NextState();
             }
             //Si esta en Manhattan Norte, deja elegir otro distrito
             else
@@ -86,7 +87,7 @@ public class Turn : MonoBehaviour
             manager.areas[2].playersInArea.Count) < 2)
         {
             activePlayer.Move(manager.areas[0]);
-            Market();
+            NextState();
         }
         //Si Manhattan no esta libre, comprueba si quiere moverse
         else
@@ -109,7 +110,6 @@ public class Turn : MonoBehaviour
     {
         Debug.Log("CHANGE PLAYER");
         activePlayer = nextPlayer;
-        //currentState = State.Begining;
         NextState();
     }
 
@@ -146,6 +146,8 @@ public class Turn : MonoBehaviour
                 manager.NextTurn();
                 break;
             default:
+                currentState = State.ThrowDice;
+                RollDice();
                 break;
         }
     }
