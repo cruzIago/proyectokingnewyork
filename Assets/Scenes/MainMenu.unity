@@ -671,6 +671,60 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &188286718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 188286720}
+  - component: {fileID: 188286719}
+  m_Layer: 0
+  m_Name: selectCharacterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &188286719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188286718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2374444de573e7e4db047b1bf71d9743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listCharacterFrames:
+  - {fileID: 1786090898682500535, guid: e5c9072ae69cf43489f470b9f1b624c0, type: 3}
+  - {fileID: 6894500711665441361, guid: a5387969dfc1f444982f67f3f4356829, type: 3}
+  - {fileID: 188511523293880036, guid: 5a9ed96c64ee04a40a6a4aace06e278a, type: 3}
+  - {fileID: 7669050723148229189, guid: 803c82dc3c980cc46a3586f18d4946d5, type: 3}
+  - {fileID: 1523619010508543244, guid: 99bc0c77511bd9840b83d7051773f203, type: 3}
+  - {fileID: 3832089344664710246, guid: 0d21542b1413e264c9495a6dc90d8657, type: 3}
+  characterContainer: {fileID: 1823318690}
+  numberPlayers: {fileID: 1436646301}
+  startGameButton: {fileID: 148458941}
+  initialCharacters: 2
+--- !u!4 &188286720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188286718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 467.65442, y: 209.68503, z: 45.345642}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &205856931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +1984,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733365419}
-  - component: {fileID: 733365420}
   m_Layer: 5
   m_Name: selectCharacter
   m_TagString: Untagged
@@ -1963,29 +2016,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &733365420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733365418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2374444de573e7e4db047b1bf71d9743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listCharacterFrames:
-  - {fileID: 1786090898682500535, guid: e5c9072ae69cf43489f470b9f1b624c0, type: 3}
-  - {fileID: 6894500711665441361, guid: a5387969dfc1f444982f67f3f4356829, type: 3}
-  - {fileID: 188511523293880036, guid: 5a9ed96c64ee04a40a6a4aace06e278a, type: 3}
-  - {fileID: 7669050723148229189, guid: 803c82dc3c980cc46a3586f18d4946d5, type: 3}
-  - {fileID: 1523619010508543244, guid: 99bc0c77511bd9840b83d7051773f203, type: 3}
-  - {fileID: 3832089344664710246, guid: 0d21542b1413e264c9495a6dc90d8657, type: 3}
-  characterContainer: {fileID: 1823318690}
-  numberPlayers: {fileID: 1436646301}
-  startGameButton: {fileID: 148458941}
-  initialCharacters: 2
 --- !u!1 &748838199
 GameObject:
   m_ObjectHideFlags: 0
@@ -6013,7 +6043,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 733365420}
+      - m_Target: {fileID: 188286719}
         m_MethodName: moreCharacters
         m_Mode: 1
         m_Arguments:
@@ -6324,7 +6354,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 733365420}
+      - m_Target: {fileID: 188286719}
         m_MethodName: lessCharacters
         m_Mode: 1
         m_Arguments:

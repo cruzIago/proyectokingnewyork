@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /**
  *  Controla el flujo de la interfaz
@@ -23,6 +24,7 @@ public class UI_Controller : MonoBehaviour
 
     void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         charactersInScreen = new List<CharacterFrame>();
         numberCharacters = 0;
         foreach (CharacterFrame ch in listCharacterFrames)
@@ -53,7 +55,7 @@ public class UI_Controller : MonoBehaviour
         //Comprobar si se paso el tutorial alguna vez? mejor hacer siempre click en omitir por ahora
         //DontDestroy o static?
         Shuffle(charactersInScreen);
-        Debug.Log(charactersInScreen);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
     }
 
     /*
@@ -220,6 +222,13 @@ public class UI_Controller : MonoBehaviour
             numberPlayers.text = "" + numberCharacters;
             DynamicFrameLess();
         }
+    }
+    #endregion
+
+    #region Getters and Setters
+    public List<CharacterFrame> GetCharactersInScreen()
+    {
+        return charactersInScreen;
     }
     #endregion
 }

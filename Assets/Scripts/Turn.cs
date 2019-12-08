@@ -6,8 +6,9 @@ using UnityEngine.UI;
 /*Clase que gestiona todo el flujo de un turno*/
 public class Turn : MonoBehaviour
 {
+    #region parameters
     //Enumeration
-    public enum State {Begining, ThrowDice, SolveDice, Movement, Market, EndTurn};
+    public enum State { ThrowDice, SolveDice, Movement, Market, EndTurn };
     private int NUMSTATES = 6;
     //Parameters
     protected SceneManager manager;
@@ -17,6 +18,8 @@ public class Turn : MonoBehaviour
     [SerializeField]
     private GameObject diceBoardPrefab;
     private DiceBoard diceBoard;
+    public GameObject diceBoardPos;
+    #endregion
 
     //Methods
     /*Constructor*/
@@ -27,55 +30,27 @@ public class Turn : MonoBehaviour
         this.manager = manager;
     }
 
-    public void StartTurn(Player activePlayer, State currentState, SceneManager manager)
-    {
-        this.activePlayer = activePlayer;
-        this.currentState = currentState;
-        this.manager = manager;
-    }
-
-    /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
-    public void NextState()
-    {
-        currentState++;
-        switch (currentState)
-        {
-            case State.ThrowDice:
-                RollDice();
-                break;
-            case State.SolveDice:
-                SolveDice();
-                break;
-            case State.Movement:
-                Move();
-                break;
-            case State.Market:
-                Market();
-                break;
-            case State.EndTurn:
-                //manager.NextTurn();
-                //EndTurn();
-                break;
-            default:
-                break;
-        }
-    }
-
+    #region States Methods
     /*Lanza los dados*/
     public void RollDice()
     {
         //Roll
         //Keep
         //ReRoll
-        diceBoard = Instantiate(diceBoardPrefab).GetComponent<DiceBoard>();
-        
+        diceBoard = Instantiate(diceBoardPrefab, diceBoardPos.transform).GetComponent<DiceBoard>();
+        diceBoard.turn = this;
+        diceBoard.mainCamera = Camera.main;
+        manager.createDiceHUD();
     }
 
     /*Aplica los efectos de los dados*/
     public void SolveDice()
     {
         //Apply Effects
+        manager.hideDiceHUD();
         diceBoard.SolveDice(activePlayer);
+        Destroy(diceBoard.gameObject);
+        NextState();
     }
 
     /*Fase de movimiento*/
@@ -93,13 +68,13 @@ public class Turn : MonoBehaviour
             if (activePlayer.currentArea.GetName().Contains("Sur"))
             {
                 activePlayer.Move(manager.areas[1]);
-                Market();
+                NextState();
             }
             //Si esta en Manhattan Medio, mueve a Manhattan Norte
             else if (activePlayer.currentArea.GetName().Contains("Medio"))
             {
                 activePlayer.Move(manager.areas[2]);
-                Market();
+                NextState();
             }
             //Si esta en Manhattan Norte, deja elegir otro distrito
             else
@@ -112,7 +87,7 @@ public class Turn : MonoBehaviour
             manager.areas[2].playersInArea.Count) < 2)
         {
             activePlayer.Move(manager.areas[0]);
-            Market();
+            NextState();
         }
         //Si Manhattan no esta libre, comprueba si quiere moverse
         else
@@ -135,16 +110,50 @@ public class Turn : MonoBehaviour
     {
         Debug.Log("CHANGE PLAYER");
         activePlayer = nextPlayer;
-        currentState = State.Begining;
+        NextState();
     }
 
-    /*Fase de fin de turno*/
-    public void EndTurn()
+    #endregion
+
+    #region Flow Methods
+    public void StartTurn(Player activePlayer, State currentState, SceneManager manager)
     {
+        this.activePlayer = activePlayer;
+        this.currentState = currentState;
+        this.manager = manager;
+        RollDice();
     }
 
-    //Auxiliar methods
+    /*Cambia el estado del juego al siguiente. Debe tener un switch que llame a las funciones*/
+    public void NextState()
+    {
+        currentState++;
+        switch (currentState)
+        {
+            case State.ThrowDice:
+                RollDice();
+                break;
+            case State.SolveDice:
+                SolveDice();
+                break;
+            case State.Movement:
+                Move();
+                break;
+            case State.Market:
+                Market();
+                break;
+            case State.EndTurn:
+                manager.NextTurn();
+                break;
+            default:
+                currentState = State.ThrowDice;
+                RollDice();
+                break;
+        }
+    }
+    #endregion
 
+    #region Auxiliar Methods
     /*Avisa al jugador que puede moverse haciendo click en un área y habilita el movimiento a las áreas disponibles*/
     public void MoveWithClick()
     {
@@ -166,7 +175,18 @@ public class Turn : MonoBehaviour
         textPanel.text = "¿Quieres moverte?";
     }
 
-    public State getState() {
+    public void RethrowDice()
+    {
+        diceBoard.InputedReroll();
+    }
+    #endregion
+
+    #region Getters Setters
+    public State getState()
+    {
         return currentState;
     }
+    #endregion
+
+
 }

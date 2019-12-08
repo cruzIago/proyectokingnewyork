@@ -8,8 +8,7 @@ public class DiceBoard : MonoBehaviour
     private DieSpawner spawner;
     [SerializeField]
     private DieChecker checker;
-    [SerializeField]
-    private Camera mainCamera;
+    public Camera mainCamera;
     [SerializeField]
     private float speedFacingToCamera = 70f;
     private Quaternion originalRotation;
@@ -17,6 +16,8 @@ public class DiceBoard : MonoBehaviour
     private int currentNumToss = 0;
     public bool isFacingToCamera = false;
     private bool finishTossingDice = false;
+
+    public Turn turn;
 
     // Start is called before the first frame update
     void Start()
@@ -27,15 +28,15 @@ public class DiceBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isFacingToCamera = transform.rotation.Equals(mainCamera.transform.rotation);
-
-        if (finishTossingDice && isFacingToCamera)
+        //isFacingToCamera = transform.rotation.Equals(mainCamera.transform.rotation);
+        isFacingToCamera = true;
+        /*if (finishTossingDice && isFacingToCamera)
         {
             checker.PrintResult();
-        }
+        }*/
 
         FaceBoardToCamera();
-        InputedReroll();
+        //InputedReroll();
         
     }
 
@@ -50,14 +51,18 @@ public class DiceBoard : MonoBehaviour
         }
     }
 
-    private void InputedReroll()
+    public void InputedReroll()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && !finishTossingDice && isFacingToCamera)
+        if (!finishTossingDice && isFacingToCamera)
         {
             currentNumToss++;
             transform.rotation = originalRotation;
             spawner.Reroll();
             finishTossingDice = currentNumToss == 2;
+            if (finishTossingDice)
+            {
+                turn.NextState();
+            }
         }
     }
 

@@ -7,7 +7,7 @@ public class Market : MonoBehaviour
 {
     //Constants
     protected readonly int SHOWNCARDS_NUM = 3;
-
+    GameObject marketUI;
     //Parameters
     public Stack<Card> deck;//Cartas del mazo sin mostrar
     public Stack<Card> discardedCards;//Pila de descartes
@@ -28,12 +28,14 @@ public class Market : MonoBehaviour
     }
 
     public void HideCards()
-    {
+    {     
         foreach (Card c in shownCards) { c.ChangeVisibility(false); }
+        if (marketUI != null) { marketUI.SetActive(false); }
     }
 
     public void ShowCards()
     {
+        if (marketUI != null) { marketUI.SetActive(true); }
         foreach (Card c in shownCards)
         {
             c.ChangeVisibility(true);
@@ -42,8 +44,13 @@ public class Market : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        marketUI = GameObject.Find("Market");
+    }
     private void Start()
     {
+        
         this.deck = new Stack<Card>();
         this.discardedCards = new Stack<Card>();
     }

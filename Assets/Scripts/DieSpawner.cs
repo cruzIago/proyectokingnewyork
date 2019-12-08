@@ -15,11 +15,7 @@ public class DieSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < numDice; i++)
-        {
-            InstantiateDie(i);
-        }
-        areAllDiceCreated = true;
+        StartCoroutine(SpawnAllDie());
     }
 
     private void Update()
@@ -29,6 +25,7 @@ public class DieSpawner : MonoBehaviour
 
     private void InstantiateDie(int i)
     {
+        Debug.Log(transform.position);
         Dice die = Instantiate(diePrefab, transform.TransformPoint(new Vector3(i, 0, 0)), Quaternion.identity);
         die.transform.parent = transform;
         die.createDie(dieChecker);
@@ -84,5 +81,15 @@ public class DieSpawner : MonoBehaviour
         {
                 die.ReRoll();
         }
+    }
+
+    IEnumerator SpawnAllDie()
+    {
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < numDice; i++)
+        {
+            InstantiateDie(i);
+        }
+        areAllDiceCreated = true;
     }
 }
