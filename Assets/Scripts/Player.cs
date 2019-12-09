@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     public Area currentArea;
     public string playerName;
     public string monsterName;
-    public Sprite monsterSprite; //unused atm. Might delete later
     public int stars;
     public int remainingHealth;
     protected int maxHealth;
@@ -29,12 +28,9 @@ public class Player : MonoBehaviour
     //Methods
 
     /*Constructor*/
-    public void InitPlayer(SceneManager manager, string playerName, string monsterName)
+    public void InitPlayer(SceneManager manager)
     {
         this.manager = manager;
-        this.playerName = playerName;
-        this.monsterName = monsterName;
-        this.monsterSprite = Resources.Load<Sprite>("Characters/" + monsterName + ".png");//Test pending
         this.stars = 0;
         this.remainingHealth = 10;
         this.maxHealth = 10;

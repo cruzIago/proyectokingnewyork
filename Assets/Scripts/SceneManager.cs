@@ -18,7 +18,6 @@ public class SceneManager : MonoBehaviour
     private List<HUDCharacter> HUDCharacters;
     public GameObject layoutCharsInGame;
 
-    public Player playerPrefab;
     public Canvas canvas;
 
     //UI
@@ -42,6 +41,7 @@ public class SceneManager : MonoBehaviour
     public Market market;
     public GameObject DiceBoardPos;
     public List<GameObject> TilePrefab;
+    public List<Player> playersPrefab;
     #endregion
 
     //Methods
@@ -72,9 +72,8 @@ public class SceneManager : MonoBehaviour
         HUDCharacters = new List<HUDCharacter>();
         foreach (CharacterFrame character in characterFrames)
         {
-            Player p = Instantiate(playerPrefab);
-            p.InitPlayer(this, "Dummy", character.characterName);
-            //TODO: Establecer modelo en funcion del nombre
+            Player p = Instantiate(playersPrefab[character.charIndex]) ;
+            p.InitPlayer(this);
             players.Add(p);
             HUDCharacter c = Instantiate(HUDCharPrefab, layoutCharsInGame.transform);
             c.setId(character.charIndex);

@@ -55,7 +55,7 @@ public class UI_Controller : MonoBehaviour
         //Comprobar si se paso el tutorial alguna vez? mejor hacer siempre click en omitir por ahora
         //DontDestroy o static?
         Shuffle(charactersInScreen);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
     }
 
     /*

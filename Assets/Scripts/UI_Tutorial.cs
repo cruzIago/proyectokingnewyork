@@ -33,7 +33,7 @@ public class UI_Tutorial : MonoBehaviour
         if (index + 1 > tutorial_scenes.Count-1)
         {
             //noTutorial=true;
-            //UnityEngine.SceneManagement.SceneManager.LoadScene();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
         }
         else
         {
@@ -49,7 +49,7 @@ public class UI_Tutorial : MonoBehaviour
      */
     void skipTutorial() {
         //noTutorial=true;
-        //UnityEngine.SceneManagement.SceneManager.LoadScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
         Debug.Log("Next scene");
     }
 
@@ -59,7 +59,7 @@ public class UI_Tutorial : MonoBehaviour
     void backTutorial() {
         if (index - 1 < 0)
         {
-            //UnityEngine.SceneManagement.SceneManager.LoadScene();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
             Debug.Log("Go to menu");
         }
         else
