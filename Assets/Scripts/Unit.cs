@@ -14,14 +14,9 @@ public class Unit : MonoBehaviour, ITile
     private Area area;
 
     //Methods
-    public void Init(Area area, int durability, int rewardCount, Reward rewardType)
+    public void Init(Area area)
     {
         this.area = area;
-        this.durability = durability;
-        this.rewardCount = rewardCount;
-        this.rewardType = rewardType;
-        area.tiles.Add(this);
-        area.unitsCount++;
     }
 
     public void DestroyTile(Player player)
@@ -39,7 +34,6 @@ public class Unit : MonoBehaviour, ITile
                 player.ChangeStars(rewardCount);
                 break;
         }
-        area.unitsCount--;
         area.tiles.Remove(this);
         Destroy(gameObject);
     }

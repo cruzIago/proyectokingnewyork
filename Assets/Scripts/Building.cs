@@ -42,9 +42,10 @@ public class Building : MonoBehaviour, ITile
                 break;
         }
         area.tiles.Remove(this);
+        GetComponent<Unit>().enabled = true;
+        GetComponent<Unit>().Init(area);
         area.tiles.Add(GetComponent<Unit>());
         transform.eulerAngles = Vector3.zero;
-        GetComponent<Unit>().enabled = true;
         enabled = false;
         
     }

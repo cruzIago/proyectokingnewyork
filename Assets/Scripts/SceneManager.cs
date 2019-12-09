@@ -202,6 +202,7 @@ public class SceneManager : MonoBehaviour
     /*Evento de pulsado de continuar*/
     public void OnClickConfirm()
     {
+        
         if (turn.getState() == Turn.State.Movement)
         {
             //Inhabilita la posibilidad de moverse a areas y pasa a la fase de mercado
@@ -219,6 +220,10 @@ public class SceneManager : MonoBehaviour
             {
                 card.ApplyEffect();
                 activePlayer.SetSelectedCard(null);
+            }
+            if (turn.getState() == Turn.State.ThrowDice)
+            {
+                turn.NextState();
             }
             else
             {

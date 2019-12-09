@@ -61,7 +61,7 @@ public class DiceBoard : MonoBehaviour
             finishTossingDice = currentNumToss == 2;
             if (finishTossingDice)
             {
-                turn.NextState();
+                turn.lastRethrow();
             }
         }
     }

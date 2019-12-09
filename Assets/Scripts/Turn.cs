@@ -180,6 +180,12 @@ public class Turn : MonoBehaviour
     {
         diceBoard.InputedReroll();
     }
+
+    public void lastRethrow()
+    {
+        manager.CreateConfirmButton();
+        manager.hideDiceHUD();
+    }
     #endregion
 
     #region Getters Setters
