@@ -41,6 +41,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private GameObject turnPrefab;
     public Market market;
     public GameObject DiceBoardPos;
+    public List<GameObject> TilePrefab;
     #endregion
 
     //Methods
@@ -85,13 +86,6 @@ public class SceneManager : MonoBehaviour
      Instancia las tarjetas de la GUI de cada jugador*/
     protected void StartGame()
     {
-
-        /*for (int i = 0; i < players.Count; i++)
-        {
-            RawImage newPInfo = Instantiate(pInfoPrefab, canvas.transform);
-            newPInfo.transform.localPosition = new Vector3(-319, 165 - 71 * i, 0);
-            playersInfo.Add(newPInfo);
-        }*/
         
 
         initButtons();
@@ -106,7 +100,6 @@ public class SceneManager : MonoBehaviour
         
         panel.SetActive(false);
         DiceHUD.SetActive(false);
-        if (debugMode) { Debug.Log(activePlayer.GetPlayerName() + " es: " + activePlayer.GetMonsterName() + " , y está en " + activePlayer.GetPosition()); }
         //turn = new Turn(activePlayer, Turn.State.Begining, this);
         turn = Instantiate(turnPrefab).GetComponent<Turn>();
         market.HideCards();
@@ -343,18 +336,7 @@ public class SceneManager : MonoBehaviour
 
     void Update()
     {
-        //TODO: Borar pls
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            players[0].ChangeLife(-3);
-            players[1].ChangeLife(-5);
-            players[2].ChangeStars(3);
-            UpdateGUI();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            NextTurn();
-        }
+        
     }
     #endregion
 

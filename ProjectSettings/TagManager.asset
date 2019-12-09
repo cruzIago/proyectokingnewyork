@@ -13,6 +13,7 @@ TagManager:
   - Button
   - PivotPos1
   - PivotPos2
+  - PivotPosTile
   layers:
   - Default
   - TransparentFX

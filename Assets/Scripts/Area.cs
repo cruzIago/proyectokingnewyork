@@ -12,6 +12,7 @@ public class Area : MonoBehaviour
     public List<Player> playersInArea;
     protected Vector3 position;
     protected Vector3 position2;
+    protected Vector3 positionTiles;
     public bool movementFlag = false;
     protected SceneManager manager;
 
@@ -43,6 +44,18 @@ public class Area : MonoBehaviour
         foreach (Player p in manager.GetPlayers()) p.ChangeLife(unitsCount * (-1));
     }
 
+    public void InitTiles()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            int randomType = Random.Range(0, 7);
+            Building newBuilding = Instantiate(manager.TilePrefab[randomType]).GetComponent<Building>();
+            newBuilding.transform.position = positionTiles + new Vector3(0, i * 0.12f, 0);
+            newBuilding.Init(this);
+            tiles.Add(newBuilding);
+        }
+    }
+
     /*Evento que se dispara al hacer click sobre el area*/
     public void OnMouseUp()
     {
@@ -66,6 +79,7 @@ public class Area : MonoBehaviour
         {
             if (child.tag == "PivotPos1") { this.position = child.transform.position;}
             if (child.tag == "PivotPos2") { this.position2 = child.transform.position;}
+            if (child.tag == "PivotPosTile") { this.positionTiles = child.transform.position; }
         }
         this.position.y += 1;
         this.position2.y += 1;
@@ -74,6 +88,8 @@ public class Area : MonoBehaviour
     private void Start()
     {
         playersInArea = new List<Player>();
+        tiles = new List<ITile>();
+        InitTiles();
         this.unitsCount = 0;
     }
 

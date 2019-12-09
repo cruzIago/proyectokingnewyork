@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7910519283477083647}
   - component: {fileID: 7825766651277522510}
   - component: {fileID: 5985800597938010878}
+  - component: {fileID: 5719128100867823010}
+  - component: {fileID: 6789895125695055203}
   - component: {fileID: 4171335428862546636}
   m_Layer: 0
   m_Name: caza-hospital2
@@ -27,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268836071957809733}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.05, y: 0, z: 6.98}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!33 &7910519283477083647
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -304,6 +306,36 @@ MonoBehaviour:
   - a: 19
     b: 18
   m_SelectedVertices: 10000000110000001200000013000000
+--- !u!114 &5719128100867823010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268836071957809733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a71159d394cb33449d4bb2a8276cfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 2
+  rewardCount: 2
+  rewardType: 2
+--- !u!114 &6789895125695055203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268836071957809733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef886b323e2e27749a5ca1d4fdad3d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 3
+  rewardCount: 2
+  rewardType: 1
 --- !u!64 &4171335428862546636
 MeshCollider:
   m_ObjectHideFlags: 0

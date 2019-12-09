@@ -15,20 +15,19 @@ public class Building : MonoBehaviour, ITile
 
     private Area area;
 
-    [SerializeField]
-    private GameObject unityPrefab;
+    public void Awake()
+    {
+        GetComponent<Unit>().enabled = false;
+    }
 
     //Methods
-    public void Init(Area area, int durability, int rewardCount, Reward rewardType)
+    public void Init(Area area)
     {
         this.area = area;
-        this.durability = durability;
-        this.rewardCount = rewardCount;
-        this.rewardType = rewardType;
     }
 
     public void DestroyTile(Player player)
-    {
+    { 
         //Remove object and set reward to player
         switch (rewardType)
         {
@@ -43,13 +42,25 @@ public class Building : MonoBehaviour, ITile
                 break;
         }
         area.tiles.Remove(this);
-        GenerateUnit();
+        area.tiles.Add(GetComponent<Unit>());
+        transform.eulerAngles = Vector3.zero;
+        GetComponent<Unit>().enabled = true;
+        enabled = false;
+        
     }
 
-    public void GenerateUnit()
+    public int GetDurability()
     {
-        //Generate paired Unit from this Bulding
-        Unit unit = Instantiate(unityPrefab).GetComponent<Unit>();
-        unit.Init(area,Random.Range(1,4),Random.Range(1,4),(Reward)Random.Range(0,3));
+        return durability;
+    }
+
+    public int GetRewardCount()
+    {
+        return rewardCount;
+    }
+
+    public Reward GetRewardType()
+    {
+        return rewardType;
     }
 }

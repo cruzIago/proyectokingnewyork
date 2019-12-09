@@ -41,7 +41,21 @@ public class Unit : MonoBehaviour, ITile
         }
         area.unitsCount--;
         area.tiles.Remove(this);
+        Destroy(gameObject);
     }
 
-    
+    public int GetDurability()
+    {
+        return durability;
+    }
+
+    public int GetRewardCount()
+    {
+        return rewardCount;
+    }
+
+    public Reward GetRewardType()
+    {
+        return rewardType;
+    }
 }

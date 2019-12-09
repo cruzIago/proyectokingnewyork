@@ -25,7 +25,6 @@ public class DieSpawner : MonoBehaviour
 
     private void InstantiateDie(int i)
     {
-        Debug.Log(transform.position);
         Dice die = Instantiate(diePrefab, transform.TransformPoint(new Vector3(i, 0, 0)), Quaternion.identity);
         die.transform.parent = transform;
         die.createDie(dieChecker);

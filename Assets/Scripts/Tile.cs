@@ -6,6 +6,8 @@ public interface ITile
 {
 
     void DestroyTile(Player player);
-
+    int GetDurability();
+    int GetRewardCount();
+    Reward GetRewardType();
 }
 

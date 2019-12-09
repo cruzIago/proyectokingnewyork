@@ -87,6 +87,8 @@ public class Turn : MonoBehaviour
             manager.areas[2].playersInArea.Count) < 2)
         {
             activePlayer.Move(manager.areas[0]);
+            activePlayer.ChangeStars(1);
+            activePlayer.ChangeEnergy(2);
             NextState();
         }
         //Si Manhattan no esta libre, comprueba si quiere moverse
@@ -99,7 +101,6 @@ public class Turn : MonoBehaviour
     /*Fase de mercado*/
     public void Market()
     {
-        Debug.Log("Entro en market");
         //All Market Logic
         manager.market.ShowCards();
         manager.panel.gameObject.SetActive(false);

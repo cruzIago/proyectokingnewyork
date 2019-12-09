@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5162384222347763877}
   - component: {fileID: 9061947693006569086}
   - component: {fileID: 8816746301387631722}
+  - component: {fileID: 31746691983801375}
+  - component: {fileID: 3963072055861026758}
   - component: {fileID: 2401260619575695317}
   m_Layer: 0
   m_Name: tanque-hospital3
@@ -27,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6988924877732799411}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.05, y: 0, z: 8.49}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!33 &5162384222347763877
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -296,6 +298,36 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &31746691983801375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6988924877732799411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a71159d394cb33449d4bb2a8276cfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 3
+  rewardCount: 3
+  rewardType: 2
+--- !u!114 &3963072055861026758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6988924877732799411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef886b323e2e27749a5ca1d4fdad3d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 4
+  rewardCount: 3
+  rewardType: 0
 --- !u!64 &2401260619575695317
 MeshCollider:
   m_ObjectHideFlags: 0

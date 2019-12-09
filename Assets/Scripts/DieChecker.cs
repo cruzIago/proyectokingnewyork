@@ -80,7 +80,7 @@ public class DieChecker : MonoBehaviour
             textResult += dieResultNames[i] + ": " + results[i] + "\n";
         }
 
-        //Debug.Log(textResult);
+        Debug.Log(textResult);
     }
 
     public void SolveDice(Player player)

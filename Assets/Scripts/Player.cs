@@ -135,10 +135,13 @@ public class Player : MonoBehaviour
     {
         if (destructions == 0)
             return;
+        if(currentArea.tiles[currentArea.tiles.Count - 1].GetDurability() <= destructions)
+        {
+            currentArea.tiles[currentArea.tiles.Count - 1].DestroyTile(this);
+        }
         Debug.Log(destructions + " destructions");
         manager.UpdateGUI();
     }
-
 
     public bool IsInManhattan()
     {

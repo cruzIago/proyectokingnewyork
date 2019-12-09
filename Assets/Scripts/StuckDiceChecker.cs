@@ -41,7 +41,6 @@ public class StuckDiceChecker : MonoBehaviour
     IEnumerator CheckStuckDice()
     {
         yield return new WaitUntil(() => spawner.areAllDiceCreated && spawner.AllDiceRolled() && spawner.AllDiceStop());
-        Debug.Log("He activado el checkeo");
         canCheckForStuckDice = true;
     }
 }
