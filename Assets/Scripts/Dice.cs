@@ -81,12 +81,19 @@ public class Dice : MonoBehaviour
         hasBeenRolled = true;
     }
 
+    public void SubstractResult()
+    {
+        if(applyResult)
+            dieChecker.SubtractResult(currentResult);
+    }
+
     public void ReRoll()
     {
         selected = stays;
         if (!selected)
         {
-            dieChecker.SubtractResult(currentResult);
+            //dieChecker.SubtractResult(currentResult);
+            SubstractResult();
             Roll();
         }
     }

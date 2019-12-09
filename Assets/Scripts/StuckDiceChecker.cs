@@ -30,6 +30,7 @@ public class StuckDiceChecker : MonoBehaviour
     private void RerollStuckDie(Dice die)
     {
         die.SetHasBeenRolled(false);
+        die.SubstractResult();
         die.Roll();
         canCheckForStuckDice = false;
         StartCoroutine(CheckStuckDice());
